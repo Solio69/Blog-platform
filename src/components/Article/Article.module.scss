@@ -1,0 +1,23 @@
+.article{
+    background: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    margin-top: 24px;
+    margin-bottom: 67px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 1;
+   
+    .article__body{ 
+      
+        
+        padding: 15px;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 28px;
+      
+        color: rgba(0, 0, 0, 0.75);
+    }
+}
