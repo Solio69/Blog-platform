@@ -1,6 +1,6 @@
 class ApiServise {
-  baseStr = 'http://kata.academy:8022';
-  // baseStr = `https://api.realworld.io/api`;
+  // baseStr = 'http://kata.academy:8022';
+  baseStr = `https://api.realworld.io/api`;
 
   async requestGet(url) {
     const body = await fetch(url)
