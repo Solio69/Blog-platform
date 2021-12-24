@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Blog-platform/static/css/main.82cf3e2b.css",
-    "main.js": "/Blog-platform/static/js/main.68a36d82.js",
+    "main.js": "/Blog-platform/static/js/main.c02daaf4.js",
     "static/media/like-empty-icon.png": "/Blog-platform/static/media/like-empty-icon.e4ffc7816448cc0e4475.png",
     "index.html": "/Blog-platform/index.html",
     "main.82cf3e2b.css.map": "/Blog-platform/static/css/main.82cf3e2b.css.map",
-    "main.68a36d82.js.map": "/Blog-platform/static/js/main.68a36d82.js.map"
+    "main.c02daaf4.js.map": "/Blog-platform/static/js/main.c02daaf4.js.map"
   },
   "entrypoints": [
     "static/css/main.82cf3e2b.css",
-    "static/js/main.68a36d82.js"
+    "static/js/main.c02daaf4.js"
   ]
 }
