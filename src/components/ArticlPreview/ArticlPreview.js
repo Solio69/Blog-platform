@@ -1,11 +1,6 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable func-names */
-/* eslint-disable no-console */
-/* eslint-disable prefer-const */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable arrow-body-style */
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 
 import React from 'react';
@@ -31,8 +26,12 @@ const ArticlPreview = function ({ item }) {
 
   // вернет список тегов
   const tags = tagList.map((el, i) => {
-    return <li key={i}>{el}</li>;
+    if (el.length) {
+      return <li key={i}>{el}</li>;
+    }
   });
+
+  // динамичекий параметр передаваемый в роутер
   const paramSlug = `/articles/${slug}`;
 
   return (

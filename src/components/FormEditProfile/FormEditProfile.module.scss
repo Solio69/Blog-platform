@@ -1,0 +1,74 @@
+
+.ant-form{
+  
+    font-family: 'Roboto', sans-serif;
+    width: 384px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    margin-top: 59px;
+    margin-bottom: 67px;
+    padding: 48px 37px;
+    border: 1px solid #D9D9D9;
+    box-sizing: border-box;
+    box-shadow: 0px 0.6087964177131653px 2.9332919120788574px 0px rgba(0, 0, 0, 0.0197);
+
+    box-shadow: 0px 1.4630224704742432px 7.049108028411865px 0px rgba(0, 0, 0, 0.0283);
+    
+    box-shadow: 0px 2.7547414302825928px 13.272845268249512px 0px rgba(0, 0, 0, 0.035);
+    
+    box-shadow: 0px 4.91398811340332px 23.67648696899414px 0px rgba(0, 0, 0, 0.0417);
+    
+    box-shadow: 0px 9.19107437133789px 44.28426742553711px 0px rgba(0, 0, 0, 0.0503);
+    
+    box-shadow: 0px 22px 106px 0px rgba(0, 0, 0, 0.07);
+    
+    .ant-form-item{
+        margin-bottom: 12px;
+        div{
+            padding: 0;
+        }
+
+        label{
+            height: 100%;
+            padding: 0;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            color: #262626;
+        }
+    }
+
+
+    .form-title{
+        text-align: center;
+        
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+
+        margin-bottom: 21px;
+    }
+    
+    .ant-form-item-control-input-content{
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 0;
+        
+        .login-form-button{
+            width: 100%;
+            margin:  12px 0 8px 0;
+        }
+
+        
+        span{
+            display: block;
+            text-align: center;
+            // margin-top: 8px;
+        }
+    }
+    .ant-divider{
+        margin: 8px 0;
+    }
+}
+

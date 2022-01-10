@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+
 import React, { Component } from 'react';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
