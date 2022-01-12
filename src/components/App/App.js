@@ -8,16 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUserSave } from '../../store/userSlice';
 
-import Layout from '../pages/Layout';
-import ArticlesList from '../pages/ArticlesList';
-import ArticleFull from '../pages/ArticleFull';
-import FormSignIn from '../FormSignIn';
-import FormSignUP from '../FormSignUP';
-import EditProfile from '../pages/EditProfile';
+import Layout from '../../pages/Layout';
+import ArticlesList from '../../pages/ArticlesList';
+import ArticleFull from '../../pages/ArticleFull';
+import SignIn from '../../pages/SignIn';
+import SignUP from '../../pages/SignUP';
+import Profile from '../../pages/Profile';
+import CreateArticle from '../../pages/CreateArticle';
 
 const App = function () {
   const dispath = useDispatch();
-  // const { error, status, userData } = useSelector((state) => state.user);
 
   useEffect(() => {
     // если токен есть то получаем данные пользователя с его использованием
@@ -32,9 +32,10 @@ const App = function () {
       <Route path="/" element={<Layout />}>
         <Route path="articles" element={<ArticlesList />} />
         <Route path="/articles/:slug" element={<ArticleFull />} />
-        <Route path="/sign-in" element={<FormSignIn />} />
-        <Route path="/sign-up" element={<FormSignUP />} />
-        <Route path="/profile" element={<EditProfile />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUP />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/new-article" element={<CreateArticle />} />
       </Route>
     </Routes>
   );

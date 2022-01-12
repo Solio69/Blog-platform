@@ -10,15 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Spin } from 'antd';
 
-import { fetchUserUpdate } from '../../../store/userSlice';
+import { fetchUserUpdate } from '../../store/userSlice';
 
-import styles from './EditProfile.module.scss';
+import FormEditProfile from '../../components/FormEditProfile';
+import ErrorMessage from '../../components/ErrorMessage';
+import SuccessMessage from '../../components/SuccessMessage';
 
-import FormEditProfile from '../../FormEditProfile'
-import ErrorMessage from '../../ErrorMessage';
-import SuccessMessage from '../../SuccessMessage';
-
-const EditProfile = () => {
+const Profile = () => {
   const dispath = useDispatch();
   const { error, status, userData } = useSelector((state) => state.user);
 
@@ -32,7 +30,7 @@ const EditProfile = () => {
     }
   }, [status]);
 
-  const editProfile=(val)=>{
+  const editProfile = (val) => {
     // сохраняет предыдущие данные пользователя
     const newUser = { ...userData };
     for (const prop in val) {
@@ -49,7 +47,6 @@ const EditProfile = () => {
       localStorage.setItem('token', JSON.stringify(res.payload.user.token));
       setSuccessEdit(true);
     });
-   
   };
 
   // сообщение об ошибке
@@ -62,9 +59,7 @@ const EditProfile = () => {
   const loading = status === 'loading' ? <Spin className={styles['ant-spin']} size="large" /> : null;
 
   const form =
-    status !== 'loading' ? (
-      <FormEditProfile callback={editProfile} email={email} username={username}/>
-    ) : null;
+    status !== 'loading' ? <FormEditProfile callback={editProfile} email={email} username={username} /> : null;
 
   return (
     <React.Fragment>
@@ -76,4 +71,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default Profile;

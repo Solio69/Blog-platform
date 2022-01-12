@@ -31,9 +31,12 @@ const UserIsLoggedIn = function () {
 
   return (
     <div className={styles['user-data']}>
-      <button type="button" className={styles['user-data__button']}>
-        Create article
-      </button>
+      <Link to="/new-article">
+        <button type="button" className={styles['user-data__button']}>
+          Create article
+        </button>
+      </Link>
+
       <Link to="/profile">
         <div className={styles['user-data__wrapper-inner']}>
           <span>{username}</span>

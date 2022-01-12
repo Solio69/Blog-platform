@@ -7,16 +7,17 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Pagination, Spin, Alert } from 'antd';
+import { Pagination } from 'antd';
 
 import 'antd/dist/antd.css';
 
 import styles from './ArticlesList.module.scss';
 
-import ArticlPreview from '../../ArticlPreview';
-import ErrorMessage from '../../ErrorMessage';
+import ArticlPreview from '../../components/ArticlPreview';
+import ErrorMessage from '../../components/ErrorMessage';
+import Loader from '../../components/Loader';
 
-import apiService from '../../../services/ApiService';
+import apiService from '../../services/ApiService';
 
 const ArticlesList = function () {
   const [list, setList] = useState([]); // список статей
@@ -117,7 +118,7 @@ const ArticlesList = function () {
     ) : null;
 
   // отображает индикатор заглушки
-  const loading = isLoading ? <Spin className={styles['ant-spin']} size="large" /> : null;
+  const loading = isLoading ? <Loader /> : null;
 
   return (
     <React.Fragment>
