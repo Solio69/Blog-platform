@@ -46,11 +46,31 @@ class ApiService {
     return body.articles;
   }
 
+  // получает конкретную статью
   async getAarticleFull(slug) {
     const url = new URL(`${this.baseStr}/articles/${slug}`);
 
     const body = await this.requestGet(url);
     return body.article;
+  }
+
+  async postCreateArticle(newArticle, token) {
+    const url = new URL(`${this.baseStr}/articles`);
+
+    const body = {
+      article: newArticle,
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    }).catch((e) => e.message);
+
+    return response.json();
   }
 }
 

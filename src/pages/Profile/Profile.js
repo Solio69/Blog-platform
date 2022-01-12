@@ -15,6 +15,7 @@ import { fetchUserUpdate } from '../../store/userSlice';
 import FormEditProfile from '../../components/FormEditProfile';
 import ErrorMessage from '../../components/ErrorMessage';
 import SuccessMessage from '../../components/SuccessMessage';
+import Loader from '../../components/Loader';
 
 const Profile = () => {
   const dispath = useDispatch();
@@ -56,7 +57,7 @@ const Profile = () => {
   const successAlert = successEdit ? <SuccessMessage description="Profile edit successfully!" /> : null;
 
   // индикатор загрузки
-  const loading = status === 'loading' ? <Spin className={styles['ant-spin']} size="large" /> : null;
+  const loading = status === 'loading' ? <Loader /> : null;
 
   const form =
     status !== 'loading' ? <FormEditProfile callback={editProfile} email={email} username={username} /> : null;

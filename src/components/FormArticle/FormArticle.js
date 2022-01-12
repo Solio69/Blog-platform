@@ -14,9 +14,8 @@ import { Form, Input, Button } from 'antd';
 
 import styles from './FormArticle.module.scss';
 
-const FormArticle = ({callback}) => {
-
-  // функция библиотеки antd 
+const FormArticle = ({ callback }) => {
+  // функция библиотеки antd
   const formItemLayoutWithOutLabel = {
     wrapperCol: {
       xs: { span: 24, offset: 0 },
@@ -24,7 +23,7 @@ const FormArticle = ({callback}) => {
     },
   };
 
-  // функция библиотеки antd 
+  // функция библиотеки antd
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -87,7 +86,7 @@ const FormArticle = ({callback}) => {
       </Form.Item>
 
       <div className={styles['form-item-list__wrapper']}>
-        <Form.List name="tagList" initialValue={[undefined]}> 
+        <Form.List name="tagList" initialValue={[undefined]}>
           {(fields, { add, remove }) => (
             <>
               {fields.map((field, index) => (
@@ -103,8 +102,11 @@ const FormArticle = ({callback}) => {
                   </Form.Item>
 
                   {fields.length > 1 ? (
-                    
-                    <Button type="dashed" onClick={() => remove(field.name)} className={styles['form-item-list__del-button']}>
+                    <Button
+                      type="dashed"
+                      onClick={() => remove(field.name)}
+                      className={styles['form-item-list__del-button']}
+                    >
                       Delete
                     </Button>
                   ) : null}
