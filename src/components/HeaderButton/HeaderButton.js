@@ -2,8 +2,7 @@
 import React from 'react';
 import styles from './HeaderButton.module.scss';
 
-const HeaderButton = function (props) {
-  const { text } = props;
+const HeaderButton = function ({ text }) {
   return (
     <button type="button" className={styles.header__button}>
       {text}

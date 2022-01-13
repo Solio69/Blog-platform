@@ -92,7 +92,7 @@ const ArticlesList = function () {
         {list.map((el, i) => {
           return (
             <li>
-              <ArticlPreview item={el} key={el.slug} />
+              <ArticlPreview item={el} key={el.slug} controllerFlag={false} />
             </li>
           );
         })}

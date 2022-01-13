@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable no-unused-vars */
 /* eslint-disable arrow-body-style */
@@ -19,17 +21,35 @@ const CreateArticle = () => {
 
   // создает стаью используя токен из хранилища
   const createArticle = (val) => {
+    // console.log(val)
+    const newArticle = {
+      title: val.title.trim(),
+      description: val.description.trim(),
+      body: val.body,
+      tagList: val.tagList.filter((el) => el).map((el) => el.trim()), // любое положительное значение + удалит пробелы по краям
+    };
+    // console.log(newArticle)
+
     setLoading(true);
-    apiService.postCreateArticle(val, JSON.parse(localStorage.getItem('token'))).then((res) => {
-      if (res.article) {
-        setLoading(false);
-        setSuccess(true);
-      } else {
+
+    apiService
+      .postCreateArticle(newArticle, JSON.parse(localStorage.getItem('token')))
+      .then((res) => {
+        if (res.article) {
+          setLoading(false);
+          setSuccess(true);
+        } else {
+          setLoading(false);
+          setIsError(true);
+          setErrorMessade(res);
+        }
+      })
+      .catch((err) => {
+        // console.log(err)
         setLoading(false);
         setIsError(true);
-        setErrorMessade(res);
-      }
-    });
+        setErrorMessade('Data loading error. Please try reloading the page or try again later.');
+      });
   };
 
   // при закрытии сообщения об успехе или ошибке

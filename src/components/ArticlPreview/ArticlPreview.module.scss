@@ -126,8 +126,10 @@
 
     .article-preview__content{
         margin-top: 7px;
-        max-width: 682px;
+        display: flex;
+        justify-content: space-between;
         p{
+            max-width: 70%;
             margin: 0;
             padding: 0;
 

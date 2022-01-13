@@ -1,0 +1,58 @@
+
+
+.controller-wrapper{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+
+    display: flex;
+    align-items: center;
+
+
+    .controller-button__del{
+        
+        border: 1px solid #F5222D;
+        box-sizing: border-box;
+        border-radius: 5px;
+        outline: none; 
+        background: none;
+        cursor: pointer;
+
+        padding: 6px 17px ;
+
+        color: #F5222D;
+
+        
+        &:hover{
+            font-weight: 500;
+        }
+    }
+    
+    .controller-button__edit{
+        border: 1px solid #52C41A;;
+        box-sizing: border-box;
+        border-radius: 5px;
+        outline: none; 
+        background: none;
+        cursor: pointer;
+    
+        padding: 6px 19px ;
+        
+        color: #52C41A;
+
+        margin-left: 12px;
+        span{
+            display: inline-block;
+        }
+
+        &:hover{
+            font-weight: 500;
+        }
+    }
+    
+
+}
+
+

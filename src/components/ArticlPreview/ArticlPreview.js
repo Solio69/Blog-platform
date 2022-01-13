@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
@@ -13,7 +14,9 @@ import ilkeIconEmpty from '../../images/like-empty-icon.png';
 
 import avatarIcon from '../../images/avatar-icon.png';
 
-const ArticlPreview = function ({ item }) {
+import ArticleControler from '../ArticleControler';
+
+const ArticlPreview = function ({ item, controllerFlag }) {
   // console.log(item);
   const { title, favoritesCount, tagList, author, description, createdAt, slug } = item;
   const { username: authorName, image: authorAvatar } = author;
@@ -62,6 +65,7 @@ const ArticlPreview = function ({ item }) {
       </div>
       <div className={styles['article-preview__content']}>
         <p className={styles['article-preview__text']}>{description}</p>
+        <ArticleControler controllerFlag={controllerFlag} />
       </div>
     </div>
   );

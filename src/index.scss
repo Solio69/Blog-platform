@@ -10,5 +10,10 @@ body{
         top: 50%;
         left: 50%;
     }
-
+    .ant-popover{
+        max-width: 240px;
+    }
+    .ant-btn {
+        height: inherit;
+    }
 }

@@ -54,6 +54,7 @@ class ApiService {
     return body.article;
   }
 
+  // добавляет новую статью
   async postCreateArticle(newArticle, token) {
     const url = new URL(`${this.baseStr}/articles`);
 

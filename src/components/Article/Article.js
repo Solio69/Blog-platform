@@ -5,15 +5,18 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
+
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
 import ArticlPreview from '../ArticlPreview';
+
 import styles from './Article.module.scss';
 
-const Article = ({ item }) => {
+const Article = ({ item, controllerFlag }) => {
   return (
     <article className={styles['article']}>
-      <ArticlPreview item={item} />
+      <ArticlPreview item={item} controllerFlag={controllerFlag} />
       <div className={styles['article__body']}>
         <ReactMarkdown children={item.body} remarkPlugins={[remarkGfm]} />
       </div>
