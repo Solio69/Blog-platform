@@ -118,7 +118,7 @@ class ApiService {
     return response;
   }
 
-  // обновляет статью 
+  // обновляет статью
   async putArticleUpdate(slug, modifiedArticle, token) {
     const url = new URL(`${this.baseStr}/articles/${slug}`);
 
@@ -136,6 +136,38 @@ class ApiService {
       body: JSON.stringify(body),
       headers: headers,
     });
+
+    return response.json();
+  }
+
+  // добавить в избранно (поставить лайк)
+  async postAddFavorites(slug, token) {
+    const url = new URL(`${this.baseStr}/articles/${slug}/favorite`);
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+    });
+
+    return response.json();
+  }
+
+  // удалить из избранного (удалить лайк)
+  async deleteFavorites(slug, token) {
+    const url = new URL(`${this.baseStr}/articles/${slug}/favorite`);
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    }).catch((e) => e.message);
 
     return response.json();
   }

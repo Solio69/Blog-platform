@@ -26,34 +26,37 @@ const ArticleFull = function () {
   const [controllerShow, setControllerShow] = useState(false);
 
   const { userData } = useSelector((state) => state.user);
-  // console.log(userData.username)
 
   useEffect(() => {
     // получает статью по slug
     apiService
       .getAarticleFull(slug)
-      .then((newItem) => {
-        // показывает контроллер если имя username в стор сопадает с автором статьи
-        if (userData.username === newItem.author.username) {
+      .then((article) => {
+        // показывает контроллер если пользователь залогинен и username в стор сопадает с автором статьи
+        if (userData && userData.username === article.author.username) {
           setControllerShow(true);
         }
 
-        setItem(newItem); // изменяет item
-        setLoading(false); // отклюает лоадер
-        setIsError(false); // флаг ошибки
+        setItem(article);
+        setLoading(false);
+        setIsError(false);
       })
       .catch(() => {
-        setIsError(true); // флаг ошибки
+        setIsError(true);
+        setErrorText('Data loading error. Please try reloading the page or try again later.');
+        setLoading(false);
       });
 
     // console.log('useEffect');
   }, [slug, isLoading, userData]);
 
   const onCloseMessage = () => {
-    setIsError(false); // флаг ошибки
-    setErrorText(''); // сообщение ошибки
+    setIsError(false);
+    setErrorText('');
+    setLoading(false);
   };
 
+  // подтвердить удаление
   const confirmDeletion = () => {
     const token = JSON.parse(localStorage.getItem('token'));
     // удаляет статью
