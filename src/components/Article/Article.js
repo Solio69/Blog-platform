@@ -13,10 +13,10 @@ import ArticlPreview from '../ArticlPreview';
 
 import styles from './Article.module.scss';
 
-const Article = ({ item, controllerFlag }) => {
+const Article = ({ item, controllerFlag, confirmDeletion }) => {
   return (
     <article className={styles['article']}>
-      <ArticlPreview item={item} controllerFlag={controllerFlag} />
+      <ArticlPreview item={item} controllerFlag={controllerFlag} confirmDeletion={confirmDeletion} />
       <div className={styles['article__body']}>
         <ReactMarkdown children={item.body} remarkPlugins={[remarkGfm]} />
       </div>

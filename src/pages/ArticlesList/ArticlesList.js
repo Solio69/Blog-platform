@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable arrow-body-style */
@@ -26,19 +28,20 @@ const ArticlesList = function () {
   const [maxPagesNum, setMaxPagesNum] = useState(0); // считает максимальное число страниц
   const [page, setPage] = useState(1); // текущая страница
 
+  const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
+
   useEffect(() => {
     getMaxPages(); // получает максимальное кол-во статей для рассчета пагинации
     getList(); // получаетс список статей для рендера
   }, []);
 
-  // console.log(page);
-
-  // считает сколько максимум отобразить страниц
+  // вычисляет сколько максимум отобразить страниц
   const getMaxPages = () => {
     apiService
-      .getArticlesMax()
+      .getArticlesMax(token)
       .then((res) => {
-        setMaxPagesNum(Math.ceil(res / 5));
+        // console.log(res)
+        setMaxPagesNum(Math.ceil(res.articlesCount / 5));
         setIsError(false);
       })
       .catch((err) => {
@@ -49,9 +52,10 @@ const ArticlesList = function () {
   // получает список
   const getList = () => {
     apiService
-      .getArticles()
-      .then((newList) => {
-        setList(newList);
+      .getArticles(token)
+      .then((res) => {
+        // console.log(res)
+        setList(res.articles);
         setLoading(false);
         setIsError(false);
       })
@@ -68,9 +72,10 @@ const ArticlesList = function () {
     setIsError(false);
 
     apiService
-      .getArticlesByPageNum(value - 1)
-      .then((newList) => {
-        setList(newList);
+      .getArticlesByPageNum((value - 1) * 5, token) // сдвигает кол-во страниц на 5
+      .then((res) => {
+        // console.log(res);
+        setList(res.articles);
         setLoading(false);
         setIsError(false);
       })
@@ -91,8 +96,8 @@ const ArticlesList = function () {
       <ul className={styles['articles-list']}>
         {list.map((el, i) => {
           return (
-            <li>
-              <ArticlPreview item={el} key={el.slug} controllerFlag={false} />
+            <li key={el.slug}>
+              <ArticlPreview item={el} controllerFlag={false} />
             </li>
           );
         })}

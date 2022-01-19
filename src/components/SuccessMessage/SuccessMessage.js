@@ -6,10 +6,17 @@ import { Alert } from 'antd';
 
 import styles from './SuccessMessage.module.scss';
 
-const SuccessMessage = function ({ description, callback }) {
+const SuccessMessage = function ({ description, callback, closable }) {
   return (
     <div className={styles['success-message']}>
-      <Alert message="Success!" description={description} type="success" showIcon closable onClose={() => callback()} />
+      <Alert
+        message="Success!"
+        description={description}
+        type="success"
+        showIcon
+        closable={closable}
+        onClose={() => callback()}
+      />
     </div>
   );
 };

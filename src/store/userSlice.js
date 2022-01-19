@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-undef */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-arrow-callback */
@@ -7,9 +9,9 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// const baseStr  = `http://kata.academy:8022`;
+const baseStr = `https://kata.academy:8021/api`;
 // const baseStr = `http://api.realworld.io/api`;
-const baseStr = `https://cirosantilli-realworld-next.herokuapp.com/api`;
+// const baseStr = `https://cirosantilli-realworld-next.herokuapp.com/api`;
 
 // регитрация пользователя
 export const fetchUserRegistration = createAsyncThunk(
@@ -27,7 +29,10 @@ export const fetchUserRegistration = createAsyncThunk(
       method: 'POST',
       body: JSON.stringify(body),
       headers: headers,
-    }).catch((e) => rejectWithValue(e.message));
+    }).catch((e) => {
+      console.log(e);
+      return rejectWithValue(e.message);
+    });
 
     return response.json();
   }
@@ -46,7 +51,10 @@ export const fetchUserLogIn = createAsyncThunk('user/fetchUserLogIn', async func
     method: 'POST',
     body: JSON.stringify(body),
     headers: headers,
-  }).catch((e) => rejectWithValue(e.message));
+  }).catch((e) => {
+    console.log(e);
+    return rejectWithValue(e.message);
+  });
 
   return response.json();
 });
@@ -82,7 +90,10 @@ export const fetchUserSave = createAsyncThunk('user/fetchUserSave', async functi
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     },
-  }).catch((e) => rejectWithValue(e.message));
+  }).catch((e) => {
+    console.log(e);
+    return rejectWithValue(e.message);
+  });
 
   return response.json();
 });
@@ -102,7 +113,13 @@ const userSlice = createSlice({
       state.status = null;
       state.error = null;
     },
+
+    // разлогинивание пользователя
+    errorNull(state, action) {
+      state.error = null;
+    },
   },
+
   extraReducers: {
     // fetchUserRegistration
     [fetchUserRegistration.pending]: (state, action) => {
@@ -113,24 +130,33 @@ const userSlice = createSlice({
       // если получен user
       if (action.payload.user) {
         state.status = 'resolved';
+        // записывает юзера в стор
         state.userData = action.payload.user;
         return;
       }
       // если получены ошибки
       if (action.payload.errors) {
-        state.status = 'resolved';
+        // создает строку ошибки
+        let errStr = '';
 
-        // возвращает строку с ошибкой из тела errors
-        const errArr = Object.entries(action.payload.errors);
-        state.error = `${errArr[0][1]}`;
-      } else {
-        state.status = 'rejected';
-        state.error = action.payload; // сюда попадет строка ошибки если запрос выполнится некорректно (404)
+        // обрабатывает ошибку 404
+        if (action.payload.errors.error) {
+          errStr += action.payload.errors.error.status;
+        } else {
+          // возвращает массив ошибок из тела errors
+          const errArr = Object.entries(action.payload.errors);
+          // накапливает сообщения об ошибках в строку ошибки
+          errArr.forEach((item) => {
+            errStr += `${item[0]}: ${item[1]} `;
+          });
+        }
+        // записывает сроку ошибки в стор
+        state.error = errStr;
       }
     },
     [fetchUserRegistration.rejected]: (state, action) => {
       state.status = 'rejected';
-      state.error = action.payload;
+      state.error = 'error';
     },
 
     // fetchUserLogIn
@@ -147,14 +173,20 @@ const userSlice = createSlice({
       }
       // если получены ошибки
       if (action.payload.errors) {
-        state.status = 'resolved';
-
-        // возвращает строку с ошибкой из тела errors
-        const errArr = Object.entries(action.payload.errors);
-        state.error = `${errArr[0][0]}: ${errArr[0][1]}`;
-      } else {
         state.status = 'rejected';
-        state.error = action.payload; // сюда попадет строка ошибки если запрос выполнится некорректно (404)
+
+        // создает строку ошибки
+        let errStr = '';
+
+        // обрабатывает ошибку 404
+        if (action.payload.errors.error) {
+          errStr += action.payload.errors.error.status;
+        } else {
+          // возвращает строку с ошибкой из тела errors
+          const errArr = Object.entries(action.payload.errors);
+          errStr = `${errArr[0][0]}: ${errArr[0][1]}`;
+        }
+        state.error = errStr;
       }
     },
     [fetchUserLogIn.rejected]: (state, action) => {
@@ -185,19 +217,30 @@ const userSlice = createSlice({
       // если получен user
       if (action.payload.user) {
         state.status = 'resolved';
+        // записывает юзера в стор
         state.userData = action.payload.user;
         return;
       }
       // если получены ошибки
       if (action.payload.errors) {
-        state.status = 'resolved';
-
-        // возвращает строку с ошибкой из тела errors
-        const errArr = Object.entries(action.payload.errors);
-        state.error = `${errArr[0][1]}`;
-      } else {
         state.status = 'rejected';
-        state.error = action.payload; // сюда попадет строка ошибки если запрос выполнится некорректно (404)
+
+        // создает строку ошибки
+        let errStr = '';
+
+        // обрабатывает ошибку 404
+        if (action.payload.errors.error) {
+          errStr += action.payload.errors.error.status;
+        } else {
+          // возвращает массив ошибок из тела errors
+          const errArr = Object.entries(action.payload.errors);
+          // накапливает сообщения об ошибках в строку ошибки
+          errArr.forEach((item) => {
+            errStr += `${item[0]}: ${item[1]} `;
+          });
+        }
+        // записывает сроку ошибки в стор
+        state.error = errStr;
       }
     },
     [fetchUserUpdate.rejected]: (state, action) => {
@@ -207,6 +250,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { logOutUser } = userSlice.actions;
+export const { logOutUser, errorNull } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-undef */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable no-console */
@@ -8,9 +9,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Spin } from 'antd';
-
-import { fetchUserUpdate } from '../../store/userSlice';
+import { fetchUserUpdate, errorNull } from '../../store/userSlice';
 
 import FormEditProfile from '../../components/FormEditProfile';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -50,11 +49,17 @@ const Profile = () => {
     });
   };
 
+  // при закрытии окна ошибки
+  const onCloseMessage = () => {
+    // обнуляет ошибку в сторе
+    dispath(errorNull());
+  };
+
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} /> : null;
+  const errorAlert = error ? <ErrorMessage description={error} callback={onCloseMessage} /> : null;
 
   // сообщение об успешной авторизации
-  const successAlert = successEdit ? <SuccessMessage description="Profile edit successfully!" /> : null;
+  const successAlert = successEdit ? <SuccessMessage description="Profile edit successfully!" closable={true} /> : null;
 
   // индикатор загрузки
   const loading = status === 'loading' ? <Loader /> : null;

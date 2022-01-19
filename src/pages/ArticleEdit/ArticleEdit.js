@@ -1,11 +1,12 @@
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-fragments */
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
+/* eslint-disable react/jsx-boolean-value */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-use-before-define */
 /* eslint-disable react/function-component-definition */
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
+import { useParams } from 'react-router-dom';
 
 import FormArticle from '../../components/FormArticle';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -14,32 +15,56 @@ import Loader from '../../components/Loader';
 
 import apiService from '../../services/ApiService';
 
-const CreateArticle = () => {
+// import styles from './ArticleEdit.module.scss';
+
+const ArticleEdit = () => {
+  const { slug } = useParams(); // получает slug из роутера
+
+  const [articleTitle, setArticleTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [articleBody, setArticleBody] = useState('');
+  const [tagList, setTagList] = useState([]);
+
   const [isLoading, setLoading] = useState(false); // отображение лоадера
   const [isError, setIsError] = useState(false); // отобажение ошибки
   const [errorText, setErrorText] = useState(''); // текст ошибки
   const [isSuccessAlert, setSuccessAlert] = useState(false); // отображение лоадера
 
-  // создает стаью используя токен из хранилища
-  const createArticle = (val) => {
-    const newArticle = {
+  useEffect(() => {
+    updateFormData();
+  }, []);
+
+  // обновляет данные в полях формы
+  const updateFormData = () => {
+    apiService.getAarticleFull(slug).then((articleData) => {
+      setTagList(articleData.tagList);
+      setDescription(articleData.description);
+      setArticleTitle(articleData.title);
+      setArticleBody(articleData.body);
+    });
+  };
+
+  // обновляет статью
+  const articleUpdate = (val) => {
+    const modifiedArticle = {
       title: val.title.trim(),
       description: val.description.trim(),
       body: val.body,
       // любое положительное значение + удалит пробелы по краям
       tagList: val.tagList.map((el) => el.trim()).filter((el) => el && el !== ''),
     };
+
     setLoading(true);
 
     apiService
-      .postCreateArticle(newArticle, JSON.parse(localStorage.getItem('token')))
+      .putArticleUpdate(slug, modifiedArticle, JSON.parse(localStorage.getItem('token')))
       .then((res) => {
         if (res.article) {
           setLoading(false);
           setSuccessAlert(true);
-          setIsError(false);
-        }
 
+          updateFormData(); // обновляет данные в форме
+        }
         if (res.errors) {
           setLoading(false);
           setIsError(true);
@@ -47,7 +72,7 @@ const CreateArticle = () => {
           setErrorText(errorStr);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
         setIsError(true);
         setErrorText('Data loading error. Please try reloading the page or try again later.');
@@ -62,15 +87,22 @@ const CreateArticle = () => {
 
   const form =
     !isLoading && !isError && !isSuccessAlert ? (
-      <FormArticle callback={createArticle} title="Create new article" />
+      <FormArticle
+        title="Edit article"
+        tagList={tagList}
+        description={description}
+        articleTitle={articleTitle}
+        articleBody={articleBody}
+        callback={articleUpdate}
+      />
     ) : null;
 
-  const loader = isLoading && !isError ? <Loader /> : null;
+  const loader = isLoading ? <Loader /> : null;
 
   const errorAlert = isError ? <ErrorMessage description={errorText} callback={atCloseAletr} /> : null;
 
   const successAlert = isSuccessAlert ? (
-    <SuccessMessage description="Article created successfully!" callback={atCloseAletr} closable={true} />
+    <SuccessMessage description="Article update successfully!" callback={atCloseAletr} closable={true} />
   ) : null;
 
   return (
@@ -83,4 +115,4 @@ const CreateArticle = () => {
   );
 };
 
-export default CreateArticle;
+export default ArticleEdit;

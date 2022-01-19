@@ -10,14 +10,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchUserRegistration } from '../../store/userSlice';
+import { fetchUserRegistration, errorNull } from '../../store/userSlice';
 
 import ErrorMessage from '../../components/ErrorMessage';
 import SuccessMessage from '../../components/SuccessMessage';
 import FormSignUP from '../../components/FormSignUP';
 import Loader from '../../components/Loader';
-
-// import styles from '../../FormSignUP/FormSignUP.module.scss';
 
 const SignUP = () => {
   const dispath = useDispatch();
@@ -30,7 +28,7 @@ const SignUP = () => {
     }
   }, [userData]);
 
-  const onFinish = (val) => {
+  const userRegistration = (val) => {
     const newUser = {
       username: val.username.trim(),
       email: val.email.trim(),
@@ -40,13 +38,18 @@ const SignUP = () => {
     dispath(fetchUserRegistration(newUser));
   };
 
+  // при закрытии окна ошибки
+  const onCloseMessage = () => {
+    // обнуляет ошибку в сторе
+    dispath(errorNull());
+  };
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} /> : null;
+  const errorAlert = error ? <ErrorMessage description={error} callback={onCloseMessage} /> : null;
 
-  // сообщение об успешной авторизации
-  const successAlert = userData ? <SuccessMessage description="Registration was successful!" /> : null;
+  // сообщение об успешной регистрации
+  const successAlert = userData ? <SuccessMessage description="Registration was successful!" closable={false} /> : null;
 
-  const form = !successAlert && status !== 'loading' ? <FormSignUP callback={onFinish} /> : null;
+  const form = !successAlert && status !== 'loading' ? <FormSignUP callback={userRegistration} /> : null;
 
   const loading = status === 'loading' ? <Loader /> : null;
 

@@ -1,50 +1,32 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-key */
-/* eslint-disable dot-notation */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/function-component-definition */
-/* eslint-disable no-undef */
-/* eslint-disable id-length */
-/* eslint-disable consistent-return */
-/* eslint-disable arrow-body-style */
+/* eslint-disable no-console */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Form, Input, Button } from 'antd';
 
 import styles from './FormArticle.module.scss';
 
-const FormArticle = ({ callback }) => {
-  // функция библиотеки antd
-  const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-      xs: { span: 24, offset: 0 },
-      sm: { span: 20, offset: 4 },
-    },
-  };
-
-  // функция библиотеки antd
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-  };
-
+const FormArticle = ({ callback, title, description, articleTitle, articleBody, tagList }) => {
   const onFinish = (val) => {
     callback(val);
   };
 
-  return (
+  const CustomizedForm = ({ fields }) => (
     <Form
+      name="dynamic_form_item"
       layout="vertical"
       size="large"
       className={styles['ant-form']}
       onFinish={onFinish}
-      {...formItemLayoutWithOutLabel}
+      fields={fields}
     >
       <div className={styles['form-title']}>
-        <span>Create new article</span>
+        <span>{title}</span>
       </div>
       <Form.Item
         className={styles['ant-form-item']}
@@ -86,25 +68,20 @@ const FormArticle = ({ callback }) => {
       </Form.Item>
 
       <div className={styles['form-item-list__wrapper']}>
-        <Form.List name="tagList" initialValue={[undefined]}>
-          {(fields, { add, remove }) => (
+        <Form.List name="tagList">
+          {(fieldsList, { add, remove }) => (
             <>
-              {fields.map((field, index) => (
-                <Form.Item
-                  className={styles['ant-form-item']}
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Tags' : ''}
-                  required={false}
-                  key={field.key}
-                >
+              {fieldsList.map((field, index) => (
+                <Form.Item label={index === 0 ? 'Tags' : ''} className={styles['ant-form-item']} key={field.key}>
                   <Form.Item {...field} noStyle>
                     <Input placeholder="Tag" style={{ width: '40%' }} />
                   </Form.Item>
 
-                  {fields.length > 1 ? (
+                  {fieldsList.length > 1 ? (
                     <Button
-                      type="dashed"
-                      onClick={() => remove(field.name)}
+                      onClick={() => {
+                        remove(field.name);
+                      }}
                       className={styles['form-item-list__del-button']}
                     >
                       Delete
@@ -114,7 +91,12 @@ const FormArticle = ({ callback }) => {
               ))}
 
               <Form.Item className={styles['form-item-list__add-button']}>
-                <Button type="dashed" onClick={() => add()}>
+                <Button
+                  type="dashed"
+                  onClick={() => {
+                    add();
+                  }}
+                >
                   Add tag
                 </Button>
               </Form.Item>
@@ -130,6 +112,32 @@ const FormArticle = ({ callback }) => {
       </div>
     </Form>
   );
+
+  // если значения переданы, то использует их
+  const CompletedForm = () => {
+    const [fields, setFields] = useState([
+      {
+        name: ['title'],
+        value: articleTitle ? articleTitle : null,
+      },
+      {
+        name: ['description'],
+        value: description ? description : null,
+      },
+      {
+        name: ['body'],
+        value: articleBody ? articleBody : null,
+      },
+      {
+        name: ['tagList'],
+        value: tagList && tagList.length ? tagList : [''],
+      },
+    ]);
+
+    return <CustomizedForm fields={fields} />;
+  };
+
+  return <CompletedForm />;
 };
 
 export default FormArticle;

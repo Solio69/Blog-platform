@@ -7,34 +7,42 @@
 /* eslint-disable react/function-component-definition */
 // ArticleControler
 import React from 'react';
+
+import { Link, useParams } from 'react-router-dom';
+
 import { Popconfirm, Button } from 'antd';
 
 import styles from './ArticleControler.module.scss';
 
-const ArticleControler = ({ controllerFlag }) => {
+const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const { slug } = useParams(); // получает slug из роутера
 
+  // показ модалки
   const showPopconfirm = () => {
     setVisible(true);
   };
 
+  // если в модалке подтвердить действие
   const handleOk = () => {
+    confirmDeletion();
+
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 500);
   };
 
+  // если нажать в модалке "No" закывает окно
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setVisible(false);
   };
 
+  // кнопка удадения
   const deleteButton = (
-    
-   <Popconfirm
+    <Popconfirm
       placement="right"
       title="Are you sure to delete this article?"
       visible={visible}
@@ -43,27 +51,21 @@ const ArticleControler = ({ controllerFlag }) => {
       onCancel={handleCancel}
       cancelText="No"
       okText="Yes"
-      className={styles['ant-popconfirm']}
-     
     >
       <Button type="primary" onClick={showPopconfirm} className={styles['controller-button__del']}>
         Delete
       </Button>
     </Popconfirm>
-
-    
   );
 
-  const onEdit = () => {
-    console.log('onEdit');
-  };
+  const paramSlug = `/articles/${slug}/edit`;
 
   const controler = controllerFlag ? (
     <div className={styles['controller-wrapper']}>
       {deleteButton}
-      <button type="button" className={styles['controller-button__edit']} onClick={onEdit}>
+      <Link to={paramSlug} className={styles['controller-button__edit']}>
         <span>Edit</span>
-      </button>
+      </Link>
     </div>
   ) : null;
 

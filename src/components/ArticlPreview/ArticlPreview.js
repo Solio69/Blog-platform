@@ -16,7 +16,7 @@ import avatarIcon from '../../images/avatar-icon.png';
 
 import ArticleControler from '../ArticleControler';
 
-const ArticlPreview = function ({ item, controllerFlag }) {
+const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   // console.log(item);
   const { title, favoritesCount, tagList, author, description, createdAt, slug } = item;
   const { username: authorName, image: authorAvatar } = author;
@@ -65,7 +65,7 @@ const ArticlPreview = function ({ item, controllerFlag }) {
       </div>
       <div className={styles['article-preview__content']}>
         <p className={styles['article-preview__text']}>{description}</p>
-        <ArticleControler controllerFlag={controllerFlag} />
+        <ArticleControler controllerFlag={controllerFlag} confirmDeletion={confirmDeletion} />
       </div>
     </div>
   );

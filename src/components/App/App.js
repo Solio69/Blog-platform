@@ -15,6 +15,7 @@ import SignIn from '../../pages/SignIn';
 import SignUP from '../../pages/SignUP';
 import Profile from '../../pages/Profile';
 import CreateArticle from '../../pages/CreateArticle';
+import ArticleEdit from '../../pages/ArticleEdit';
 
 const App = function () {
   const dispath = useDispatch();
@@ -36,6 +37,7 @@ const App = function () {
         <Route path="/sign-up" element={<SignUP />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/new-article" element={<CreateArticle />} />
+        <Route path="/articles/:slug/edit" element={<ArticleEdit />} />
       </Route>
     </Routes>
   );
