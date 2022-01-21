@@ -30,17 +30,19 @@ const ArticleEdit = () => {
   const [errorText, setErrorText] = useState(''); // текст ошибки
   const [isSuccessAlert, setSuccessAlert] = useState(false); // отображение лоадера
 
+  const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
+
   useEffect(() => {
     updateFormData();
   }, []);
 
   // обновляет данные в полях формы
   const updateFormData = () => {
-    apiService.getAarticleFull(slug).then((articleData) => {
-      setTagList(articleData.tagList);
-      setDescription(articleData.description);
-      setArticleTitle(articleData.title);
-      setArticleBody(articleData.body);
+    apiService.getAarticleFull(slug, token).then((res) => {
+      setTagList(res.article.tagList);
+      setDescription(res.article.description);
+      setArticleTitle(res.article.title);
+      setArticleBody(res.article.body);
     });
   };
 

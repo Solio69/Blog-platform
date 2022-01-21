@@ -20,15 +20,24 @@ const Profile = () => {
   const dispath = useDispatch();
   const { error, status, userData } = useSelector((state) => state.user);
 
-  const { email, username, token } = userData;
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [token, setToken] = useState('');
 
-  const [successEdit, setSuccessEdit] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    if (status === 'loading') {
-      setSuccessEdit(false);
+    // если пользователь сохранен в стор
+    if (userData) {
+      setEmail(userData.email);
+      setUsername(userData.username);
+      setToken(userData.token);
     }
-  }, [status]);
+
+    if (status === 'loading') {
+      setIsSuccess(false);
+    }
+  }, [status, userData]);
 
   const editProfile = (val) => {
     // сохраняет предыдущие данные пользователя
@@ -41,11 +50,9 @@ const Profile = () => {
       }
     }
     dispath(fetchUserUpdate({ newUser, token })).then((res) => {
-      // console.log(res.payload.user.token)
-
       localStorage.removeItem('token');
       localStorage.setItem('token', JSON.stringify(res.payload.user.token));
-      setSuccessEdit(true);
+      setIsSuccess(true);
     });
   };
 
@@ -55,11 +62,18 @@ const Profile = () => {
     dispath(errorNull());
   };
 
+  // при закрытии сообщения об успехе
+  const atCloseSuccessMessage = () => {
+    setIsSuccess(false);
+  };
+
   // сообщение об ошибке
   const errorAlert = error ? <ErrorMessage description={error} callback={onCloseMessage} /> : null;
 
   // сообщение об успешной авторизации
-  const successAlert = successEdit ? <SuccessMessage description="Profile edit successfully!" closable={true} /> : null;
+  const successMessage = isSuccess ? (
+    <SuccessMessage description="Profile edit successfully!" closable={true} callback={atCloseSuccessMessage} />
+  ) : null;
 
   // индикатор загрузки
   const loading = status === 'loading' ? <Loader /> : null;
@@ -70,7 +84,7 @@ const Profile = () => {
   return (
     <React.Fragment>
       {errorAlert}
-      {successAlert}
+      {successMessage}
       {form}
       {loading}
     </React.Fragment>

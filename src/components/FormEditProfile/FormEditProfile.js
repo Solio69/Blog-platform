@@ -1,25 +1,28 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Form, Input, Button } from 'antd';
 
 import styles from './FormEditProfile.module.scss';
 
 const FormEditProfile = ({ callback, email, username }) => {
-  return (
+  const onFinish = (val) => {
+    callback(val);
+  };
+
+  const CustomizedForm = ({ fields }) => (
     <Form
+      name="dynamic_form_item"
       layout="vertical"
       size="large"
       className={styles['ant-form']}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={(val) => {
-        callback(val);
-      }}
+      onFinish={onFinish}
+      fields={fields}
     >
       <div className={styles['form-title']}>
         <span>Edit Profile</span>
@@ -29,7 +32,6 @@ const FormEditProfile = ({ callback, email, username }) => {
         className={styles['ant-form-item']}
         name="username"
         label="Username"
-        initialValue={username}
         rules={[
           {
             required: true,
@@ -46,7 +48,6 @@ const FormEditProfile = ({ callback, email, username }) => {
         className={styles['ant-form-item']}
         label="Email address"
         name="email"
-        initialValue={email}
         rules={[
           {
             type: 'email',
@@ -94,6 +95,24 @@ const FormEditProfile = ({ callback, email, username }) => {
       </Form.Item>
     </Form>
   );
+
+  // если значения переданы, то использует их
+  const CompletedForm = () => {
+    const [fields, setFields] = useState([
+      {
+        name: ['username'],
+        value: username ? username : '',
+      },
+      {
+        name: ['email'],
+        value: email ? email : '',
+      },
+    ]);
+
+    return <CustomizedForm fields={fields} />;
+  };
+
+  return <CompletedForm />;
 };
 
 export default FormEditProfile;

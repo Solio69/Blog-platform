@@ -4,7 +4,9 @@
 /* eslint-disable no-unused-vars */
 
 import React from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 
 import { logOutUser } from '../../store/userSlice';
@@ -25,6 +27,7 @@ const UserIsLoggedIn = function () {
   const logOut = () => {
     // удаляет token из localStorage
     localStorage.removeItem('token');
+
     // и очищает данные пользователя в сторе
     dispath(logOutUser());
   };

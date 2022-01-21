@@ -23,14 +23,20 @@ import apiService from '../../services/ApiService';
 
 const ArticlesList = function () {
   const [list, setList] = useState([]); // список статей
+
   const [isLoading, setLoading] = useState(true); // отображение лоадера
   const [isError, setIsError] = useState(false); // отобажение ошибки
+
+  const savedPage = JSON.parse(localStorage.getItem('savedPage')) ? JSON.parse(localStorage.getItem('savedPage')) : 1; // сохраненная страница из хранилища
+  const [page, setPage] = useState(savedPage); // текущая страница
   const [maxPagesNum, setMaxPagesNum] = useState(0); // считает максимальное число страниц
-  const [page, setPage] = useState(1); // текущая страница
 
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
   useEffect(() => {
+    if (JSON.parse(localStorage.getItem('savedPage'))) {
+      setPage(savedPage);
+    }
     getMaxPages(); // получает максимальное кол-во статей для рассчета пагинации
     getList(); // получаетс список статей для рендера
   }, []);
@@ -40,7 +46,7 @@ const ArticlesList = function () {
     apiService
       .getArticlesMax(token)
       .then((res) => {
-        // console.log(res)
+        // console.log
         setMaxPagesNum(Math.ceil(res.articlesCount / 5));
         setIsError(false);
       })
@@ -52,9 +58,9 @@ const ArticlesList = function () {
   // получает список
   const getList = () => {
     apiService
-      .getArticles(token)
+      // .getArticles(token)
+      .getArticlesByPageNum((page - 1) * 5, token)
       .then((res) => {
-        // console.log(res)
         setList(res.articles);
         setLoading(false);
         setIsError(false);
@@ -66,6 +72,8 @@ const ArticlesList = function () {
 
   // запрашивает новый список статей по изменению страницы пагинации
   const onChangePage = (value) => {
+    localStorage.setItem('savedPage', JSON.stringify(value));
+
     setPage(value);
     setList({});
     setLoading(true);
@@ -116,7 +124,7 @@ const ArticlesList = function () {
         className={styles['ant-pagination']}
         showQuickJumper
         showSizeChanger={false}
-        defaultCurrent={page}
+        current={page}
         total={maxPagesNum * 10}
         onChange={onChangePage}
       />

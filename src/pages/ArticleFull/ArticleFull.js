@@ -27,17 +27,19 @@ const ArticleFull = function () {
 
   const { userData } = useSelector((state) => state.user);
 
+  const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
+
   useEffect(() => {
     // получает статью по slug
     apiService
-      .getAarticleFull(slug)
-      .then((article) => {
+      .getAarticleFull(slug, token)
+      .then((res) => {
         // показывает контроллер если пользователь залогинен и username в стор сопадает с автором статьи
-        if (userData && userData.username === article.author.username) {
+        if (userData && userData.username === res.article.author.username) {
           setControllerShow(true);
         }
 
-        setItem(article);
+        setItem(res.article);
         setLoading(false);
         setIsError(false);
       })
@@ -58,7 +60,7 @@ const ArticleFull = function () {
 
   // подтвердить удаление
   const confirmDeletion = () => {
-    const token = JSON.parse(localStorage.getItem('token'));
+    // const token = JSON.parse(localStorage.getItem('token'));
     // удаляет статью
     apiService.deleteArticle(slug, token).then((res) => {
       // если первый символ статуса 2 (OK)

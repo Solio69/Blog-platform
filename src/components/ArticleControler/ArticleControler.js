@@ -10,11 +10,15 @@ import React from 'react';
 
 import { Link, useParams } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+
 import { Popconfirm, Button } from 'antd';
 
 import styles from './ArticleControler.module.scss';
 
 const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
+  const {userData } = useSelector((state) => state.user);
+
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const { slug } = useParams(); // получает slug из роутера
@@ -60,7 +64,7 @@ const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
 
   const paramSlug = `/articles/${slug}/edit`;
 
-  const controler = controllerFlag ? (
+  const controler = controllerFlag && userData ? (
     <div className={styles['controller-wrapper']}>
       {deleteButton}
       <Link to={paramSlug} className={styles['controller-button__edit']}>

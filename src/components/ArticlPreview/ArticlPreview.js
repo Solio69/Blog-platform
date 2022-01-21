@@ -1,31 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable react/prop-types */
-
 import React, { useState, useEffect } from 'react';
-
 import { useSelector } from 'react-redux';
-
 import { Link } from 'react-router-dom';
 import { formCreateDate } from '../../utils/index';
-
 import styles from './ArticlPreview.module.scss';
-
 import likeIconEmpty from '../../images/like-empty-icon.png';
 import likeIconFill from '../../images/like-fill-icon.png.png';
-
 import apiService from '../../services/ApiService';
-
 import avatarIcon from '../../images/avatar-icon.png';
-
 import ArticleControler from '../ArticleControler';
 
 const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
-
   const { title, favorited, favoritesCount, tagList, author, description, createdAt, slug } = item;
   const { username: authorName, image: authorAvatar } = author;
 
@@ -36,11 +25,7 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   const avatar = authorAvatar === 'null' ? avatarIcon : authorAvatar;
 
   // вернет список тегов
-  const tags = tagList.map((el, i) => {
-    if (el.length) {
-      return <li key={i}>{el}</li>;
-    }
-  });
+  const tags = tagList.map((el, i) => (el.length ? <li key={i}>{el}</li> : null));
 
   // динамичекий параметр передаваемый в роутер
   const paramSlug = `/articles/${slug}`;
@@ -62,13 +47,13 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
     }
 
     // если пользователь авторизован
-    if(userData){
+    if (userData) {
       // то кнопка лайка разблокирована
-      setLikeDsabled(false)
+      setLikeDsabled(false);
     }
-  }, []);
+  }, [userData, favorited]);
 
-  const onlikeClick  = () => {
+  const onlikeClick = () => {
     const token = JSON.parse(localStorage.getItem('token'));
     // если лайк не стоит
     if (!like) {
@@ -105,7 +90,12 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
               {title}
             </Link>
             <div className={styles['article-preview__article-likes']}>
-              <button type="button" className={styles['article-preview__button-likes']} onClick={onlikeClick} disabled={isLikeDsabled}>
+              <button
+                type="button"
+                className={styles['article-preview__button-likes']}
+                onClick={onlikeClick}
+                disabled={isLikeDsabled}
+              >
                 <img src={likeIcon} alt="ilke-icon" />
               </button>
               <span className={styles['article-preview__likes-count']}>{likeCount}</span>
