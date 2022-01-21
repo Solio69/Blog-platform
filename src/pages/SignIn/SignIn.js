@@ -1,8 +1,3 @@
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable no-undef */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable no-unused-vars */
 
 import React, { useEffect } from 'react';
 
@@ -14,7 +9,7 @@ import SuccessMessage from '../../components/SuccessMessage';
 import FormSignIn from '../../components/FormSignIn';
 import Loader from '../../components/Loader';
 
-const SignIn = () => {
+const SignIn = function (){
   const dispath = useDispatch();
   const { error, status, userData } = useSelector((state) => state.user);
 
@@ -56,12 +51,12 @@ const SignIn = () => {
   const loading = status === 'loading' ? <Loader /> : null;
 
   return (
-    <React.Fragment>
+    <>
       {errorAlert}
       {successAlert}
       {form}
       {loading}
-    </React.Fragment>
+    </>
   );
 };
 

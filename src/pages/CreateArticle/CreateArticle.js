@@ -1,10 +1,4 @@
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/function-component-definition */
+
 import React, { useState } from 'react';
 
 import FormArticle from '../../components/FormArticle';
@@ -14,7 +8,7 @@ import Loader from '../../components/Loader';
 
 import apiService from '../../services/ApiService';
 
-const CreateArticle = () => {
+const CreateArticle = function() {
   const [isLoading, setLoading] = useState(false); // отображение лоадера
   const [isError, setIsError] = useState(false); // отобажение ошибки
   const [errorText, setErrorText] = useState(''); // текст ошибки
@@ -47,7 +41,7 @@ const CreateArticle = () => {
           setErrorText(errorStr);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
         setIsError(true);
         setErrorText('Data loading error. Please try reloading the page or try again later.');
@@ -70,17 +64,17 @@ const CreateArticle = () => {
   const errorAlert = isError ? <ErrorMessage description={errorText} callback={atCloseAletr} /> : null;
 
   const successAlert = isSuccessAlert ? (
-    <SuccessMessage description="Article created successfully!" callback={atCloseAletr} closable={true} />
+    <SuccessMessage description="Article created successfully!" callback={atCloseAletr} closable />
   ) : null;
 
   return (
-    <React.Fragment>
+    <>
       {successAlert}
       {errorAlert}
       {form}
       {loader}
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default CreateArticle;

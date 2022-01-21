@@ -1,11 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable react/prop-types */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/function-component-definition */
-// ArticleControler
 import React from 'react';
 
 import { Link, useParams } from 'react-router-dom';
@@ -16,8 +8,8 @@ import { Popconfirm, Button } from 'antd';
 
 import styles from './ArticleControler.module.scss';
 
-const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
-  const {userData } = useSelector((state) => state.user);
+const ArticleControler = function ({ controllerFlag, confirmDeletion }) {
+  const { userData } = useSelector((state) => state.user);
 
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
@@ -64,16 +56,17 @@ const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
 
   const paramSlug = `/articles/${slug}/edit`;
 
-  const controler = controllerFlag && userData ? (
-    <div className={styles['controller-wrapper']}>
-      {deleteButton}
-      <Link to={paramSlug} className={styles['controller-button__edit']}>
-        <span>Edit</span>
-      </Link>
-    </div>
-  ) : null;
+  const controler =
+    controllerFlag && userData ? (
+      <div className={styles['controller-wrapper']}>
+        {deleteButton}
+        <Link to={paramSlug} className={styles['controller-button__edit']}>
+          <span>Edit</span>
+        </Link>
+      </div>
+    ) : null;
 
-  return <React.Fragment>{controler}</React.Fragment>;
+  return controler;
 };
 
 export default ArticleControler;

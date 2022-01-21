@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-fragments */
-
 import React, { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
@@ -48,9 +43,7 @@ const ArticleFull = function () {
         setErrorText('Data loading error. Please try reloading the page or try again later.');
         setLoading(false);
       });
-
-    // console.log('useEffect');
-  }, [slug, isLoading, userData]);
+  }, [slug, isLoading, userData, token]);
 
   const onCloseMessage = () => {
     setIsError(false);
@@ -93,12 +86,12 @@ const ArticleFull = function () {
     ) : null;
 
   return (
-    <React.Fragment>
+    <>
       {errorMasege}
       {successMasege}
       {loading}
       {article}
-    </React.Fragment>
+    </>
   );
 };
 

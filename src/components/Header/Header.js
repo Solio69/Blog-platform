@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable dot-notation */
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,7 +15,7 @@ const Header = function () {
 
   return (
     <div className={styles.header}>
-      <Link to="/articles" className={styles['header__title']}>
+      <Link to="/articles" className={styles.header__title}>
         Realworld Blog
       </Link>
       <div className={styles['header__user-information']}>{userDataShow}</div>

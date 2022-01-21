@@ -1,5 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+
+import PropTypes from 'prop-types'
+
 import styles from './HeaderButton.module.scss';
 
 const HeaderButton = function ({ text }) {
@@ -9,5 +11,16 @@ const HeaderButton = function ({ text }) {
     </button>
   );
 };
+
+
+
+HeaderButton.defaultProps = {
+  text:'',
+};
+
+HeaderButton.propTypes = {
+  text: PropTypes.string,
+};
+
 
 export default HeaderButton;

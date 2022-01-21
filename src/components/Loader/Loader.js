@@ -1,10 +1,8 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable arrow-body-style */
 import React from 'react';
 import { Spin } from 'antd';
 import styles from '../../index.scss';
 
-const Loader = () => {
+const Loader = function () {
   return <Spin className={styles['ant-spin']} size="large" />;
 };
 

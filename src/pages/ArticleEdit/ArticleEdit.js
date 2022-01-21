@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
-/* eslint-disable react/function-component-definition */
+/* eslint-disable react/jsx-boolean-value */
 
 import React, { useState, useEffect } from 'react';
 
@@ -15,9 +13,7 @@ import Loader from '../../components/Loader';
 
 import apiService from '../../services/ApiService';
 
-// import styles from './ArticleEdit.module.scss';
-
-const ArticleEdit = () => {
+const ArticleEdit = function () {
   const { slug } = useParams(); // получает slug из роутера
 
   const [articleTitle, setArticleTitle] = useState('');
@@ -32,10 +28,6 @@ const ArticleEdit = () => {
 
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
-  useEffect(() => {
-    updateFormData();
-  }, []);
-
   // обновляет данные в полях формы
   const updateFormData = () => {
     apiService.getAarticleFull(slug, token).then((res) => {
@@ -45,6 +37,10 @@ const ArticleEdit = () => {
       setArticleBody(res.article.body);
     });
   };
+
+  useEffect(() => {
+    updateFormData();
+  }, []);
 
   // обновляет статью
   const articleUpdate = (val) => {
@@ -108,12 +104,12 @@ const ArticleEdit = () => {
   ) : null;
 
   return (
-    <React.Fragment>
+    <>
       {successAlert}
       {errorAlert}
       {form}
       {loader}
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,10 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-unneeded-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 
 import React, { useState, useEffect } from 'react';
@@ -50,7 +44,7 @@ const ArticlesList = function () {
         setMaxPagesNum(Math.ceil(res.articlesCount / 5));
         setIsError(false);
       })
-      .catch((err) => {
+      .catch(() => {
         showError();
       });
   };
@@ -65,7 +59,7 @@ const ArticlesList = function () {
         setLoading(false);
         setIsError(false);
       })
-      .catch((err) => {
+      .catch(() => {
         showError();
       });
   };
@@ -87,7 +81,7 @@ const ArticlesList = function () {
         setLoading(false);
         setIsError(false);
       })
-      .catch((err) => {
+      .catch(() => {
         showError();
       });
   };
@@ -102,13 +96,11 @@ const ArticlesList = function () {
   const newList =
     list.length && !isError ? (
       <ul className={styles['articles-list']}>
-        {list.map((el, i) => {
-          return (
-            <li key={el.slug}>
-              <ArticlPreview item={el} controllerFlag={false} />
-            </li>
-          );
-        })}
+        {list.map((el) => (
+          <li key={el.slug}>
+            <ArticlPreview item={el} controllerFlag={false} />
+          </li>
+        ))}
       </ul>
     ) : null;
 
@@ -134,12 +126,12 @@ const ArticlesList = function () {
   const loading = isLoading ? <Loader /> : null;
 
   return (
-    <React.Fragment>
+    <>
       {newList}
       {pagination}
       {loading}
       {errorMasege}
-    </React.Fragment>
+    </>
   );
 };
 

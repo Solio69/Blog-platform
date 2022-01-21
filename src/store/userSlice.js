@@ -1,17 +1,11 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-undef */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-arrow-callback */
-/* eslint-disable id-length */
-/* eslint-disable func-names */
-/* eslint-disable object-shorthand */
+/* eslint-disable no-console */
+/* eslint-disable no-param-reassign */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const baseStr = `https://kata.academy:8021/api`;
-// const baseStr = `http://api.realworld.io/api`;
-// const baseStr = `https://cirosantilli-realworld-next.herokuapp.com/api`;
+
 
 // регитрация пользователя
 export const fetchUserRegistration = createAsyncThunk(
@@ -28,11 +22,8 @@ export const fetchUserRegistration = createAsyncThunk(
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: headers,
-    }).catch((e) => {
-      console.log(e);
-      return rejectWithValue(e.message);
-    });
+      headers,
+    }).catch((err) => rejectWithValue(err.message));
 
     return response.json();
   }
@@ -50,11 +41,8 @@ export const fetchUserLogIn = createAsyncThunk('user/fetchUserLogIn', async func
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
-    headers: headers,
-  }).catch((e) => {
-    console.log(e);
-    return rejectWithValue(e.message);
-  });
+    headers,
+  }).catch((err) => rejectWithValue(err.message))
 
   return response.json();
 });
@@ -74,7 +62,7 @@ export const fetchUserUpdate = createAsyncThunk(
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => rejectWithValue(e.message));
+    }).catch((err) => rejectWithValue(err.message))
 
     return response.json();
   }
@@ -90,10 +78,7 @@ export const fetchUserSave = createAsyncThunk('user/fetchUserSave', async functi
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     },
-  }).catch((e) => {
-    console.log(e);
-    return rejectWithValue(e.message);
-  });
+  }).catch((err) => rejectWithValue(err.message))
 
   return response.json();
 });
@@ -108,21 +93,21 @@ const userSlice = createSlice({
 
   reducers: {
     // разлогинивание пользователя
-    logOutUser(state, action) {
+    logOutUser(state) {
       state.userData = null;
       state.status = null;
       state.error = null;
     },
 
     // разлогинивание пользователя
-    errorNull(state, action) {
+    errorNull(state) {
       state.error = null;
     },
   },
 
   extraReducers: {
     // fetchUserRegistration
-    [fetchUserRegistration.pending]: (state, action) => {
+    [fetchUserRegistration.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
@@ -154,13 +139,13 @@ const userSlice = createSlice({
         state.error = errStr;
       }
     },
-    [fetchUserRegistration.rejected]: (state, action) => {
+    [fetchUserRegistration.rejected]: (state) => {
       state.status = 'rejected';
       state.error = 'error';
     },
 
     // fetchUserLogIn
-    [fetchUserLogIn.pending]: (state, action) => {
+    [fetchUserLogIn.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
@@ -195,7 +180,7 @@ const userSlice = createSlice({
     },
 
     // fetchUserSave
-    [fetchUserSave.pending]: (state, action) => {
+    [fetchUserSave.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },
@@ -209,7 +194,7 @@ const userSlice = createSlice({
     },
 
     // fetchUserUpdate
-    [fetchUserUpdate.pending]: (state, action) => {
+    [fetchUserUpdate.pending]: (state) => {
       state.status = 'loading';
       state.error = null;
     },

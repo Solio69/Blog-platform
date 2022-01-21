@@ -1,16 +1,11 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/prop-types */
-/* eslint-disable consistent-return */
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable no-unused-vars */
+import React from 'react';
+
 import { Navigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-const RequireAuth = ({ children }) => {
-  // const location = useLocation()
+const RequireAuth = function ({ children }) {
   const { userData } = useSelector((state) => state.user);
 
   if (!userData) {
@@ -20,4 +15,4 @@ const RequireAuth = ({ children }) => {
   return children;
 };
 
-export { RequireAuth };
+export default RequireAuth;

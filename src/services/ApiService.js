@@ -1,4 +1,4 @@
-/* eslint-disable object-shorthand */
+
 class ApiService {
   baseStr = 'https://kata.academy:8021/api';
 
@@ -13,7 +13,7 @@ class ApiService {
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => e.message);
+    }).catch((err) => err.message);
 
     return response.json();
   }
@@ -29,7 +29,7 @@ class ApiService {
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => e.message);
+    }).catch((err) => err.message);
 
     return response.json();
   }
@@ -44,7 +44,7 @@ class ApiService {
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => e.message);
+    }).catch((err) => err.message);
 
     return response.json();
   }
@@ -65,7 +65,7 @@ class ApiService {
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: headers,
+      headers,
     });
 
     return response.json();
@@ -81,7 +81,7 @@ class ApiService {
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => e.message);
+    }).catch((err) => err.message);
 
     return response;
   }
@@ -102,7 +102,7 @@ class ApiService {
     const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify(body),
-      headers: headers,
+      headers,
     });
 
     return response.json();
@@ -119,7 +119,7 @@ class ApiService {
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: headers,
+      headers,
     });
 
     return response.json();
@@ -135,7 +135,7 @@ class ApiService {
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((e) => e.message);
+    }).catch((err) => err.message);
 
     return response.json();
   }

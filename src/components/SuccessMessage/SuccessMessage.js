@@ -1,7 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
 import React from 'react';
+
+import PropTypes from 'prop-types'
+
 import { Alert } from 'antd';
 
 import styles from './SuccessMessage.module.scss';
@@ -20,5 +20,20 @@ const SuccessMessage = function ({ description, callback, closable }) {
     </div>
   );
 };
+
+
+// description, callback, closable
+SuccessMessage.defaultProps = {
+  description:'',
+  closable: true
+};
+
+SuccessMessage.propTypes = {
+  description: PropTypes.string,
+  // eslint-disable-next-line react/require-default-props
+  callback:PropTypes.func,
+  closable: PropTypes.bool,
+};
+
 
 export default SuccessMessage;

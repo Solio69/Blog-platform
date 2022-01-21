@@ -1,18 +1,17 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable id-length */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/prop-types */
-
 import React from 'react';
+
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom';
+
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
+
 import styles from './FormSignUP.module.scss';
 
-const FormSignUP = ({ callback }) => {
+const FormSignUP = function ({ callback }) {
   return (
     <Form
       layout="vertical"
-      // name="normal_login"
       size="large"
       className={styles['ant-form']}
       initialValues={{
@@ -122,6 +121,10 @@ const FormSignUP = ({ callback }) => {
       </Form.Item>
     </Form>
   );
+};
+
+FormSignUP.propTypes = {
+  callback:PropTypes.func.isRequired,
 };
 
 export default FormSignUP;

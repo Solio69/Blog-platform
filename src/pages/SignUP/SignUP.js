@@ -1,11 +1,4 @@
-//
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-undef */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-unused-vars */
+
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +10,7 @@ import SuccessMessage from '../../components/SuccessMessage';
 import FormSignUP from '../../components/FormSignUP';
 import Loader from '../../components/Loader';
 
-const SignUP = () => {
+const SignUP = function() {
   const dispath = useDispatch();
   const { error, status, userData } = useSelector((state) => state.user);
 
@@ -54,12 +47,12 @@ const SignUP = () => {
   const loading = status === 'loading' ? <Loader /> : null;
 
   return (
-    <React.Fragment>
+    <>
       {errorAlert}
       {successAlert}
       {form}
       {loading}
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,9 +1,4 @@
 /* eslint-disable react/jsx-boolean-value */
-/* eslint-disable no-undef */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable no-console */
-/* eslint-disable react/jsx-fragments */
-/* eslint-disable no-unused-vars */
 
 import React, { useEffect, useState } from 'react';
 
@@ -16,7 +11,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import SuccessMessage from '../../components/SuccessMessage';
 import Loader from '../../components/Loader';
 
-const Profile = () => {
+const Profile = function (){
   const dispath = useDispatch();
   const { error, status, userData } = useSelector((state) => state.user);
 
@@ -82,12 +77,12 @@ const Profile = () => {
     status !== 'loading' ? <FormEditProfile callback={editProfile} email={email} username={username} /> : null;
 
   return (
-    <React.Fragment>
+    <>
       {errorAlert}
       {successMessage}
       {form}
       {loading}
-    </React.Fragment>
+    </>
   );
 };
 

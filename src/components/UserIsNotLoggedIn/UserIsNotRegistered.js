@@ -1,5 +1,4 @@
 import React from 'react';
-// import styles from './UserIsNotLoggedIn.module.scss';
 import { Link } from 'react-router-dom';
 import HeaderButton from '../HeaderButton/HeaderButton';
 

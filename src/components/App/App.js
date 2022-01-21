@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 
 import { Route, Routes, Navigate } from 'react-router-dom';
@@ -17,7 +15,7 @@ import Profile from '../../pages/Profile';
 import CreateArticle from '../../pages/CreateArticle';
 import ArticleEdit from '../../pages/ArticleEdit';
 
-import { RequireAuth } from '../../hoc/RequireAuth';
+import RequireAuth from '../../hoc/RequireAuth';
 
 const App = function () {
   const dispath = useDispatch();
@@ -27,7 +25,7 @@ const App = function () {
     if (JSON.parse(localStorage.getItem('token'))) {
       dispath(fetchUserSave(JSON.parse(localStorage.getItem('token'))));
     }
-  }, []);
+  }, [dispath]);
 
   return (
     <Routes>
@@ -53,9 +51,14 @@ const App = function () {
             </RequireAuth>
           }
         />
-        <Route path="articles/:slug/edit" element={ <RequireAuth>
+        <Route
+          path="articles/:slug/edit"
+          element={
+            <RequireAuth>
               <ArticleEdit />
-            </RequireAuth>} />
+            </RequireAuth>
+          }
+        />
       </Route>
     </Routes>
   );

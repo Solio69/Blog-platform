@@ -1,15 +1,14 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-
 import React from 'react';
+
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom';
 
 import { Form, Input, Button } from 'antd';
 
 import styles from './FormSignIn.module.scss';
 
-const FormSignIn = ({ callback }) => {
+const FormSignIn = function ({ callback }) {
   return (
     <Form
       layout="vertical"
@@ -65,6 +64,10 @@ const FormSignIn = ({ callback }) => {
       </Form.Item>
     </Form>
   );
+};
+
+FormSignIn.propTypes = {
+  callback:PropTypes.func.isRequired,
 };
 
 export default FormSignIn;

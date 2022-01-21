@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable no-unused-vars */
-
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +17,7 @@ const UserIsLoggedIn = function () {
   const { username, image } = userData;
   const dispath = useDispatch();
 
-  const avatar = image ? image : avatarPlug;
+  const avatar = image || avatarPlug;
 
   const logOut = () => {
     // удаляет token из localStorage
@@ -47,7 +42,7 @@ const UserIsLoggedIn = function () {
         </div>
       </Link>
 
-      <div onClick={logOut}>
+      <div role="button" tabIndex={0} onClick={logOut} onKeyDown={logOut}>
         <HeaderButton text="Log Out" />
       </div>
     </div>

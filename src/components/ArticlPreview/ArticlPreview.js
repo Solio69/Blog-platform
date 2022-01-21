@@ -1,17 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
-/* eslint-disable react/prop-types */
+
 import React, { useState, useEffect } from 'react';
+
+import PropTypes from 'prop-types'; 
+
 import { useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
-import { formCreateDate } from '../../utils/index';
+
+import formCreateDate from '../../utils/index';
+
 import styles from './ArticlPreview.module.scss';
+
 import likeIconEmpty from '../../images/like-empty-icon.png';
 import likeIconFill from '../../images/like-fill-icon.png.png';
-import apiService from '../../services/ApiService';
 import avatarIcon from '../../images/avatar-icon.png';
+
+import apiService from '../../services/ApiService';
+
 import ArticleControler from '../ArticleControler';
 
 const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
@@ -25,6 +30,7 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   const avatar = authorAvatar === 'null' ? avatarIcon : authorAvatar;
 
   // вернет список тегов
+  // eslint-disable-next-line react/no-array-index-key
   const tags = tagList.map((el, i) => (el.length ? <li key={i}>{el}</li> : null));
 
   // динамичекий параметр передаваемый в роутер
@@ -117,6 +123,42 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
       </div>
     </div>
   );
+};
+
+
+ArticlPreview.defaultProps = {
+  controllerFlag:false,
+  item:{
+    title: '', 
+    favorited:false, 
+    favoritesCount:null, 
+    tagList:[], 
+    author:PropTypes.shape({
+      username: '', 
+      image: null
+    }), 
+    description:'', 
+    createdAt:'', 
+    slug:'', 
+  }
+};
+
+ArticlPreview.propTypes = {
+  item:PropTypes.shape({
+    title: PropTypes.string, 
+    favorited:PropTypes.bool, 
+    favoritesCount:PropTypes.number, 
+    tagList:PropTypes.shape([]), 
+    author:PropTypes.shape({
+      username: PropTypes.string, 
+      image: PropTypes.string
+    }), 
+    description:PropTypes.string, 
+    createdAt:PropTypes.string, 
+    slug:PropTypes.string, 
+  }),
+  controllerFlag:PropTypes.bool,
+  confirmDeletion:PropTypes.func.isRequired,
 };
 
 export default ArticlPreview;
