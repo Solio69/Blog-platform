@@ -31,10 +31,10 @@ const App = function () {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Navigate to="/articles" />} />
-        <Route path="articles" element={<ArticlesList />} />
-        <Route path="articles/:slug" element={<ArticleFull />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="sign-up" element={<SignUP />} />
+        <Route path="/articles" element={<ArticlesList />} />
+        <Route path="/articles/:slug" element={<ArticleFull />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUP />} />
         <Route
           path="profile"
           element={
@@ -44,7 +44,7 @@ const App = function () {
           }
         />
         <Route
-          path="new-article"
+          path="/new-article"
           element={
             <RequireAuth>
               <CreateArticle />
@@ -52,7 +52,7 @@ const App = function () {
           }
         />
         <Route
-          path="articles/:slug/edit"
+          path="/articles/:slug/edit"
           element={
             <RequireAuth>
               <ArticleEdit />

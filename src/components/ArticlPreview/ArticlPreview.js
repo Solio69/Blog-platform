@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
 
 import React, { useState, useEffect } from 'react';
 
@@ -148,7 +150,7 @@ ArticlPreview.propTypes = {
     title: PropTypes.string, 
     favorited:PropTypes.bool, 
     favoritesCount:PropTypes.number, 
-    tagList:PropTypes.shape([]), 
+    tagList:PropTypes.array, 
     author:PropTypes.shape({
       username: PropTypes.string, 
       image: PropTypes.string
@@ -158,7 +160,7 @@ ArticlPreview.propTypes = {
     slug:PropTypes.string, 
   }),
   controllerFlag:PropTypes.bool,
-  confirmDeletion:PropTypes.func.isRequired,
+  confirmDeletion:PropTypes.func,
 };
 
 export default ArticlPreview;
