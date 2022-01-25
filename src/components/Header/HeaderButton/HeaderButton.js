@@ -1,10 +1,8 @@
 import React from 'react';
-
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 import styles from './HeaderButton.module.scss';
 
-const HeaderButton = function ({ text }) {
+const HeaderButton = ({ text }) => {
   return (
     <button type="button" className={styles.header__button}>
       {text}
@@ -12,15 +10,12 @@ const HeaderButton = function ({ text }) {
   );
 };
 
-
-
 HeaderButton.defaultProps = {
-  text:'',
+  text: '',
 };
 
 HeaderButton.propTypes = {
   text: PropTypes.string,
 };
 
-
-export default HeaderButton;
+export { HeaderButton };

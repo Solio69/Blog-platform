@@ -1,4 +1,3 @@
-
 class ApiService {
   baseStr = 'https://kata.academy:8021/api';
 
@@ -143,4 +142,4 @@ class ApiService {
 
 const apiService = new ApiService();
 
-export default apiService;
+export { apiService };

@@ -1,14 +1,11 @@
+import React, { useState, memo } from 'react';
+import { FormArticle } from '../../components/FormArticle';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { SuccessMessage } from '../../components/SuccessMessage';
+import { Loader } from '../../components/Loader';
+import { apiService } from '../../services/apiService';
 
-import React, { useState } from 'react';
-
-import FormArticle from '../../components/FormArticle';
-import ErrorMessage from '../../components/ErrorMessage';
-import SuccessMessage from '../../components/SuccessMessage';
-import Loader from '../../components/Loader';
-
-import apiService from '../../services/ApiService';
-
-const CreateArticle = function() {
+const CreateArticle = memo(() => {
   const [isLoading, setLoading] = useState(false); // отображение лоадера
   const [isError, setIsError] = useState(false); // отобажение ошибки
   const [errorText, setErrorText] = useState(''); // текст ошибки
@@ -25,27 +22,33 @@ const CreateArticle = function() {
     };
     setLoading(true);
 
-    apiService
-      .postCreateArticle(newArticle, JSON.parse(localStorage.getItem('token')))
-      .then((res) => {
-        if (res.article) {
-          setLoading(false);
-          setSuccessAlert(true);
-          setIsError(false);
-        }
+    try {
+      apiService
 
-        if (res.errors) {
+        .postCreateArticle(newArticle, JSON.parse(localStorage.getItem('token')))
+        .then((res) => {
+          if (res.article) {
+            setLoading(false);
+            setSuccessAlert(true);
+            setIsError(false);
+          }
+
+          if (res.errors) {
+            setLoading(false);
+            setIsError(true);
+            const errorStr = `${res.errors.error.status} ${res.errors.message}`;
+            setErrorText(errorStr);
+          }
+        })
+        .catch(() => {
           setLoading(false);
           setIsError(true);
-          const errorStr = `${res.errors.error.status} ${res.errors.message}`;
-          setErrorText(errorStr);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-        setIsError(true);
-        setErrorText('Data loading error. Please try reloading the page or try again later.');
-      });
+          setErrorText('Data loading error. Please try reloading the page or try again later.');
+        });
+    } catch (e) {
+      setLoading(false);
+      console.log(e);
+    }
   };
 
   // при закрытии сообщения об успехе или ошибке
@@ -56,15 +59,15 @@ const CreateArticle = function() {
 
   const form =
     !isLoading && !isError && !isSuccessAlert ? (
-      <FormArticle callback={createArticle} title="Create new article" />
+      <FormArticle transferData={createArticle} title="Create new article" />
     ) : null;
 
   const loader = isLoading && !isError ? <Loader /> : null;
 
-  const errorAlert = isError ? <ErrorMessage description={errorText} callback={atCloseAletr} /> : null;
+  const errorAlert = isError ? <ErrorMessage description={errorText} closingAlert={atCloseAletr} /> : null;
 
   const successAlert = isSuccessAlert ? (
-    <SuccessMessage description="Article created successfully!" callback={atCloseAletr} closable />
+    <SuccessMessage description="Article created successfully!" closingAlert={atCloseAletr} closable />
   ) : null;
 
   return (
@@ -75,6 +78,6 @@ const CreateArticle = function() {
       {loader}
     </>
   );
-}
+});
 
-export default CreateArticle;
+export { CreateArticle };

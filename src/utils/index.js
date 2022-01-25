@@ -1,8 +1,7 @@
-
 import { format } from 'date-fns';
 
-const formCreateDate = function(dateStr) {
+const formCreateDate = (dateStr) => {
   return format(new Date(dateStr), 'LLLL d, y');
 };
 
-export default formCreateDate;
+export { formCreateDate };

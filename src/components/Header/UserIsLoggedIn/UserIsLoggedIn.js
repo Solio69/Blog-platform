@@ -1,30 +1,30 @@
 import React from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Link } from 'react-router-dom';
-
-import { logOutUser } from '../../store/userSlice';
-
-import HeaderButton from '../HeaderButton';
-
+import { logOutUser } from '../../../store/userSlice';
+import { HeaderButton } from '../HeaderButton';
 import styles from './UserIsLoggedIn.module.scss';
+import avatarPlug from '../../../images/avatar-icon.png';
 
-import avatarPlug from '../../images/avatar-icon.png';
+const UserIsLoggedIn = () => {
+  const stateUser = useSelector((state) => state.user);
 
-const UserIsLoggedIn = function () {
-  const { userData } = useSelector((state) => state.user);
+  const { userData } = stateUser;
   const { username, image } = userData;
+
   const dispath = useDispatch();
 
   const avatar = image || avatarPlug;
 
   const logOut = () => {
-    // удаляет token из localStorage
-    localStorage.removeItem('token');
-
-    // и очищает данные пользователя в сторе
-    dispath(logOutUser());
+    try {
+      // удаляет token из localStorage
+      localStorage.removeItem('token');
+      // и очищает данные пользователя в сторе
+      dispath(logOutUser());
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -49,4 +49,4 @@ const UserIsLoggedIn = function () {
   );
 };
 
-export default UserIsLoggedIn;
+export { UserIsLoggedIn };

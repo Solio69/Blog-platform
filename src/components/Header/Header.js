@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-import UserIsNotLoggedIn from '../UserIsNotLoggedIn';
-import UserIsLoggedIn from '../UserIsLoggedIn';
-
+import { UserIsNotLoggedIn } from './UserIsNotLoggedIn';
+import { UserIsLoggedIn } from './UserIsLoggedIn';
 import styles from './Header.module.scss';
 
-const Header = function () {
-  const { userData } = useSelector((state) => state.user);
+const Header = () => {
+  const stateUser = useSelector((state) => state.user);
+  const { userData } = stateUser;
 
   // если данные пользвателя есть в стор (пользователь залогинен), то показываем их
   const userDataShow = userData ? <UserIsLoggedIn /> : <UserIsNotLoggedIn />;
@@ -23,4 +22,4 @@ const Header = function () {
   );
 };
 
-export default Header;
+export { Header };

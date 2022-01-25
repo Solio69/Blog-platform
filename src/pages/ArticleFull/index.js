@@ -1,3 +1,3 @@
-import ArticleFull from './ArticleFull';
+import { ArticleFull } from './ArticleFull';
 
-export default ArticleFull;
+export { ArticleFull };

@@ -1,12 +1,9 @@
 import React from 'react';
-
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 import { Alert } from 'antd';
-
 import styles from './SuccessMessage.module.scss';
 
-const SuccessMessage = function ({ description, callback, closable }) {
+const SuccessMessage = ({ description, closingAlert, closable }) => {
   return (
     <div className={styles['success-message']}>
       <Alert
@@ -15,25 +12,23 @@ const SuccessMessage = function ({ description, callback, closable }) {
         type="success"
         showIcon
         closable={closable}
-        onClose={() => callback()}
+        onClose={() => closingAlert()}
       />
     </div>
   );
 };
 
-
 // description, callback, closable
 SuccessMessage.defaultProps = {
-  description:'',
-  closable: true
+  description: '',
+  closable: true,
 };
 
 SuccessMessage.propTypes = {
   description: PropTypes.string,
   // eslint-disable-next-line react/require-default-props
-  callback:PropTypes.func,
+  closingAlert: PropTypes.func,
   closable: PropTypes.bool,
 };
 
-
-export default SuccessMessage;
+export { SuccessMessage };

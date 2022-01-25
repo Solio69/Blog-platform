@@ -1,15 +1,12 @@
 import React from 'react';
-
 import { Link, useParams } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
-
 import { Popconfirm, Button } from 'antd';
-
 import styles from './ArticleControler.module.scss';
 
-const ArticleControler = function ({ controllerFlag, confirmDeletion }) {
-  const { userData } = useSelector((state) => state.user);
+const ArticleControler = ({ controllerFlag, confirmDeletion }) => {
+  const stateUser = useSelector((state) => state.user);
+  const { userData } = stateUser;
 
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
@@ -69,4 +66,4 @@ const ArticleControler = function ({ controllerFlag, confirmDeletion }) {
   return controler;
 };
 
-export default ArticleControler;
+export { ArticleControler };

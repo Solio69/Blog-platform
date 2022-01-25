@@ -2,18 +2,15 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-boolean-value */
 
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, memo } from 'react';
 import { useParams } from 'react-router-dom';
+import { FormArticle } from '../../components/FormArticle';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { SuccessMessage } from '../../components/SuccessMessage';
+import { Loader } from '../../components/Loader';
+import { apiService } from '../../services/apiService';
 
-import FormArticle from '../../components/FormArticle';
-import ErrorMessage from '../../components/ErrorMessage';
-import SuccessMessage from '../../components/SuccessMessage';
-import Loader from '../../components/Loader';
-
-import apiService from '../../services/ApiService';
-
-const ArticleEdit = function () {
+const ArticleEdit = memo(() => {
   const { slug } = useParams(); // получает slug из роутера
 
   const [articleTitle, setArticleTitle] = useState('');
@@ -55,7 +52,7 @@ const ArticleEdit = function () {
     setLoading(true);
 
     apiService
-      .putArticleUpdate(slug, modifiedArticle, JSON.parse(localStorage.getItem('token')))
+      .putArticleUpdate(slug, modifiedArticle, token)
       .then((res) => {
         if (res.article) {
           setLoading(false);
@@ -91,16 +88,16 @@ const ArticleEdit = function () {
         description={description}
         articleTitle={articleTitle}
         articleBody={articleBody}
-        callback={articleUpdate}
+        transferData={articleUpdate}
       />
     ) : null;
 
   const loader = isLoading ? <Loader /> : null;
 
-  const errorAlert = isError ? <ErrorMessage description={errorText} callback={atCloseAletr} /> : null;
+  const errorAlert = isError ? <ErrorMessage description={errorText} closingAlert={atCloseAletr} /> : null;
 
   const successAlert = isSuccessAlert ? (
-    <SuccessMessage description="Article update successfully!" callback={atCloseAletr} closable={true} />
+    <SuccessMessage description="Article update successfully!" closingAlert={atCloseAletr} closable={true} />
   ) : null;
 
   return (
@@ -111,6 +108,6 @@ const ArticleEdit = function () {
       {loader}
     </>
   );
-};
+});
 
-export default ArticleEdit;
+export { ArticleEdit };

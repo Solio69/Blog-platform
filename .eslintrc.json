@@ -54,6 +54,12 @@
                 "assert": "either"
             }
         ],
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": "arrow-function"
+            }
+        ],
         "react/state-in-constructor": [
             "off"
         ],
@@ -70,9 +76,12 @@
                 ]
             }
         ],
-        "react/no-arrow-function-lifecycle": "off",
         "react/no-invalid-html-attribute": "off",
-        "react/no-unused-class-component-methods": "off"
+        "react/no-unused-class-component-methods": "off",
+        "import/prefer-default-export": "off",
+        "arrow-body-style": "off",
+        "react/display-name": "off",
+        "react/jsx-boolean-value": "off"
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {

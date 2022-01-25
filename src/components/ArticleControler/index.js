@@ -1,3 +1,3 @@
-import ArticleControler from './ArticleControler';
+import { ArticleControler } from './ArticleControler';
 
-export default ArticleControler;
+export { ArticleControler };

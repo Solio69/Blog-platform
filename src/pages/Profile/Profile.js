@@ -1,19 +1,16 @@
-/* eslint-disable react/jsx-boolean-value */
-
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { fetchUserUpdate, errorNull } from '../../store/userSlice';
+import { FormEditProfile } from '../../components/FormEditProfile';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { SuccessMessage } from '../../components/SuccessMessage';
+import { Loader } from '../../components/Loader';
 
-import FormEditProfile from '../../components/FormEditProfile';
-import ErrorMessage from '../../components/ErrorMessage';
-import SuccessMessage from '../../components/SuccessMessage';
-import Loader from '../../components/Loader';
-
-const Profile = function (){
+const Profile = memo(() => {
   const dispath = useDispatch();
-  const { error, status, userData } = useSelector((state) => state.user);
+
+  const stateUser = useSelector((state) => state.user);
+  const { error, status, userData } = stateUser;
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -45,9 +42,14 @@ const Profile = function (){
       }
     }
     dispath(fetchUserUpdate({ newUser, token })).then((res) => {
-      localStorage.removeItem('token');
-      localStorage.setItem('token', JSON.stringify(res.payload.user.token));
-      setIsSuccess(true);
+      try {
+        localStorage.removeItem('token');
+        localStorage.setItem('token', JSON.stringify(res.payload.user.token));
+        setIsSuccess(true);
+      } catch (e) {
+        setIsSuccess(false);
+        console.log(e);
+      }
     });
   };
 
@@ -63,18 +65,18 @@ const Profile = function (){
   };
 
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} callback={onCloseMessage} /> : null;
+  const errorAlert = error ? <ErrorMessage description={error} closingAlert={onCloseMessage} /> : null;
 
   // сообщение об успешной авторизации
   const successMessage = isSuccess ? (
-    <SuccessMessage description="Profile edit successfully!" closable={true} callback={atCloseSuccessMessage} />
+    <SuccessMessage description="Profile edit successfully!" closable={true} closingAlert={atCloseSuccessMessage} />
   ) : null;
 
   // индикатор загрузки
   const loading = status === 'loading' ? <Loader /> : null;
 
   const form =
-    status !== 'loading' ? <FormEditProfile callback={editProfile} email={email} username={username} /> : null;
+    status !== 'loading' ? <FormEditProfile transferData={editProfile} email={email} username={username} /> : null;
 
   return (
     <>
@@ -84,6 +86,6 @@ const Profile = function (){
       {loading}
     </>
   );
-};
+});
 
-export default Profile;
+export { Profile };

@@ -1,3 +1,3 @@
-import CreateArticle from './CreateArticle';
+import { CreateArticle } from './CreateArticle';
 
-export default CreateArticle;
+export { CreateArticle };

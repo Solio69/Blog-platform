@@ -1,22 +1,24 @@
-
-import React, { useEffect } from 'react';
-
+import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserLogIn, errorNull } from '../../store/userSlice';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { SuccessMessage } from '../../components/SuccessMessage';
+import { FormSignIn } from '../../components/FormSignIn';
+import { Loader } from '../../components/Loader';
 
-import ErrorMessage from '../../components/ErrorMessage';
-import SuccessMessage from '../../components/SuccessMessage';
-import FormSignIn from '../../components/FormSignIn';
-import Loader from '../../components/Loader';
-
-const SignIn = function (){
+const SignIn = memo(() => {
   const dispath = useDispatch();
-  const { error, status, userData } = useSelector((state) => state.user);
+  const stateUser = useSelector((state) => state.user);
+  const { error, status, userData } = stateUser;
 
   useEffect(() => {
-    // если есть днные о юзере, то сохраняет токен в хранилище
-    if (userData && userData !== null) {
-      localStorage.setItem('token', JSON.stringify(userData.token));
+    try {
+      // если есть днные о юзере, то сохраняет токен в хранилище
+      if (userData && userData !== null) {
+        localStorage.setItem('token', JSON.stringify(userData.token));
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, [userData]);
 
@@ -37,7 +39,7 @@ const SignIn = function (){
   };
 
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} callback={onCloseMessage} /> : null;
+  const errorAlert = error ? <ErrorMessage description={error} closingAlert={onCloseMessage} /> : null;
 
   // сообщение об успешной авторизации
   const successAlert = userData ? (
@@ -58,6 +60,6 @@ const SignIn = function (){
       {loading}
     </>
   );
-};
+});
 
-export default SignIn;
+export { SignIn };

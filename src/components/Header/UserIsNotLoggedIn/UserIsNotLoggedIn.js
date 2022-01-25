@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HeaderButton from '../HeaderButton/HeaderButton';
+import { HeaderButton } from '../HeaderButton';
 
-const UserIsNotLoggedIn = function () {
+const UserIsNotLoggedIn = () => {
   return (
     <div>
       <Link to="/sign-in">
@@ -15,4 +15,4 @@ const UserIsNotLoggedIn = function () {
   );
 };
 
-export default UserIsNotLoggedIn;
+export { UserIsNotLoggedIn };

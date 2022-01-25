@@ -1,3 +1,3 @@
-import FormSignIn from './FormSignIn';
+import { FormSignIn } from './FormSignIn';
 
-export default FormSignIn;
+export { FormSignIn };

@@ -1,21 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
-
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, memo } from 'react';
 import { Pagination } from 'antd';
-
 import 'antd/dist/antd.css';
-
 import styles from './ArticlesList.module.scss';
+import { ArticlPreview } from '../../components/ArticlPreview';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { Loader } from '../../components/Loader';
+import { apiService } from '../../services/apiService';
 
-import ArticlPreview from '../../components/ArticlPreview';
-import ErrorMessage from '../../components/ErrorMessage';
-import Loader from '../../components/Loader';
-
-import apiService from '../../services/ApiService';
-
-const ArticlesList = function () {
+const ArticlesList = memo(() => {
   const [list, setList] = useState([]); // список статей
 
   const [isLoading, setLoading] = useState(true); // отображение лоадера
@@ -66,24 +60,28 @@ const ArticlesList = function () {
 
   // запрашивает новый список статей по изменению страницы пагинации
   const onChangePage = (value) => {
-    localStorage.setItem('savedPage', JSON.stringify(value));
+    try {
+      localStorage.setItem('savedPage', JSON.stringify(value));
 
-    setPage(value);
-    setList({});
-    setLoading(true);
-    setIsError(false);
+      setPage(value);
+      setList({});
+      setLoading(true);
+      setIsError(false);
 
-    apiService
-      .getArticlesByPageNum((value - 1) * 5, token) // сдвигает кол-во страниц на 5
-      .then((res) => {
-        // console.log(res);
-        setList(res.articles);
-        setLoading(false);
-        setIsError(false);
-      })
-      .catch(() => {
-        showError();
-      });
+      apiService
+        .getArticlesByPageNum((value - 1) * 5, token) // сдвигает кол-во страниц на 5
+        .then((res) => {
+          // console.log(res);
+          setList(res.articles);
+          setLoading(false);
+          setIsError(false);
+        })
+        .catch(() => {
+          showError();
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const showError = () => {
@@ -133,6 +131,6 @@ const ArticlesList = function () {
       {errorMasege}
     </>
   );
-};
+});
 
-export default ArticlesList;
+export { ArticlesList };

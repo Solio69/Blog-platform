@@ -1,29 +1,28 @@
 import React, { useEffect } from 'react';
-
 import { Route, Routes, Navigate } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
-
 import { fetchUserSave } from '../../store/userSlice';
+import { Layout } from '../../pages/Layout';
+import { ArticlesList } from '../../pages/ArticlesList';
+import { ArticleFull } from '../../pages/ArticleFull';
+import { SignIn } from '../../pages/SignIn';
+import { SignUP } from '../../pages/SignUP';
+import { Profile } from '../../pages/Profile';
+import { CreateArticle } from '../../pages/CreateArticle';
+import { ArticleEdit } from '../../pages/ArticleEdit';
+import { RequireAuth } from '../../hoc/RequireAuth';
 
-import Layout from '../../pages/Layout';
-import ArticlesList from '../../pages/ArticlesList';
-import ArticleFull from '../../pages/ArticleFull';
-import SignIn from '../../pages/SignIn';
-import SignUP from '../../pages/SignUP';
-import Profile from '../../pages/Profile';
-import CreateArticle from '../../pages/CreateArticle';
-import ArticleEdit from '../../pages/ArticleEdit';
-
-import RequireAuth from '../../hoc/RequireAuth';
-
-const App = function () {
+const App = () => {
   const dispath = useDispatch();
 
   useEffect(() => {
-    // если токен есть то получаем данные пользователя с его использованием
-    if (JSON.parse(localStorage.getItem('token'))) {
-      dispath(fetchUserSave(JSON.parse(localStorage.getItem('token'))));
+    try {
+      // если токен есть то получаем данные пользователя с его использованием
+      if (JSON.parse(localStorage.getItem('token'))) {
+        dispath(fetchUserSave(JSON.parse(localStorage.getItem('token'))));
+      }
+    } catch (e) {
+      console.log(e);
     }
   }, [dispath]);
 
@@ -64,4 +63,4 @@ const App = function () {
   );
 };
 
-export default App;
+export { App };

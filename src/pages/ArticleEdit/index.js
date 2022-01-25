@@ -1,3 +1,3 @@
-import ArticleEdit from './ArticleEdit';
+import { ArticleEdit } from './ArticleEdit';
 
-export default ArticleEdit;
+export { ArticleEdit };

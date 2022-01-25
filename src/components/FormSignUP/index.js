@@ -1,4 +1,3 @@
-// FormSignUP
-import FormSignUP from './FormSignUP';
+import { FormSignUP } from './FormSignUP';
 
-export default FormSignUP;
+export { FormSignUP };

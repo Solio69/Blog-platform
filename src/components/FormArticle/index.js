@@ -1,3 +1,3 @@
-import FormArticle from './FormArticle';
+import { FormArticle } from './FormArticle';
 
-export default FormArticle;
+export { FormArticle };

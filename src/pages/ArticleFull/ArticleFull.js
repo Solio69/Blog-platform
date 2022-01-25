@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, memo } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
+import { Article } from '../../components/Article';
+import { ErrorMessage } from '../../components/ErrorMessage';
+import { SuccessMessage } from '../../components/SuccessMessage';
+import { Loader } from '../../components/Loader';
+import { apiService } from '../../services/apiService';
 
-import Article from '../../components/Article';
-import ErrorMessage from '../../components/ErrorMessage';
-import SuccessMessage from '../../components/SuccessMessage';
-import Loader from '../../components/Loader';
-
-import apiService from '../../services/ApiService';
-
-const ArticleFull = function () {
+const ArticleFull = memo(() => {
   const { slug } = useParams(); // получает slug из роутера
   const [item, setItem] = useState({}); // отображаемый элемент
   const [isLoading, setLoading] = useState(true); // отображение лоадера
@@ -20,7 +16,8 @@ const ArticleFull = function () {
   const [isSuccess, setIsSuccess] = useState(false); // отобажение успех запроса
   const [controllerShow, setControllerShow] = useState(false);
 
-  const { userData } = useSelector((state) => state.user);
+  const stateUser = useSelector((state) => state.user);
+  const { userData } = stateUser;
 
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
@@ -53,7 +50,6 @@ const ArticleFull = function () {
 
   // подтвердить удаление
   const confirmDeletion = () => {
-    // const token = JSON.parse(localStorage.getItem('token'));
     // удаляет статью
     apiService.deleteArticle(slug, token).then((res) => {
       // если первый символ статуса 2 (OK)
@@ -77,12 +73,12 @@ const ArticleFull = function () {
     ) : null;
 
   // соообщение об ошибке
-  const errorMasege = isError ? <ErrorMessage description={errorText} callback={onCloseMessage} /> : null;
+  const errorMasege = isError ? <ErrorMessage description={errorText} closingAlert={onCloseMessage} /> : null;
 
   // собщение об успехе
   const successMasege =
     isSuccess && !isError ? (
-      <SuccessMessage description="Article successfully removed!" callback={onCloseMessage} closable={false} />
+      <SuccessMessage description="Article successfully removed!" closingAlert={onCloseMessage} closable={false} />
     ) : null;
 
   return (
@@ -93,6 +89,6 @@ const ArticleFull = function () {
       {article}
     </>
   );
-};
+});
 
-export default ArticleFull;
+export { ArticleFull };

@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-
+import React, { memo } from 'react';
 import { Navigate } from 'react-router-dom';
-
 import { useSelector } from 'react-redux';
 
-const RequireAuth = function ({ children }) {
-  const { userData } = useSelector((state) => state.user);
+const RequireAuth = memo(({ children }) => {
+  const stateUser = useSelector((state) => state.user);
+  const { userData } = stateUser;
 
   if (!userData) {
     return <Navigate to="/sign-in" />;
   }
 
   return children;
-};
+});
 
-export default RequireAuth;
+export { RequireAuth };

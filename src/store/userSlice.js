@@ -1,11 +1,8 @@
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
-
+/* eslint-disable prefer-arrow-callback */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const baseStr = `https://kata.academy:8021/api`;
-
 
 // регитрация пользователя
 export const fetchUserRegistration = createAsyncThunk(
@@ -42,7 +39,7 @@ export const fetchUserLogIn = createAsyncThunk('user/fetchUserLogIn', async func
     method: 'POST',
     body: JSON.stringify(body),
     headers,
-  }).catch((err) => rejectWithValue(err.message))
+  }).catch((err) => rejectWithValue(err.message));
 
   return response.json();
 });
@@ -62,7 +59,7 @@ export const fetchUserUpdate = createAsyncThunk(
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((err) => rejectWithValue(err.message))
+    }).catch((err) => rejectWithValue(err.message));
 
     return response.json();
   }
@@ -78,7 +75,7 @@ export const fetchUserSave = createAsyncThunk('user/fetchUserSave', async functi
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     },
-  }).catch((err) => rejectWithValue(err.message))
+  }).catch((err) => rejectWithValue(err.message));
 
   return response.json();
 });
@@ -121,6 +118,7 @@ const userSlice = createSlice({
       }
       // если получены ошибки
       if (action.payload.errors) {
+        state.status = 'rejected';
         // создает строку ошибки
         let errStr = '';
 

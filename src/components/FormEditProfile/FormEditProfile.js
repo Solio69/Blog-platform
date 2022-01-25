@@ -1,20 +1,16 @@
 /* eslint-disable react/no-unstable-nested-components */
-
 import React, { useState } from 'react';
-
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
-
 import styles from './FormEditProfile.module.scss';
 
-const FormEditProfile = function ({ callback, email, username }) {
+const FormEditProfile = ({ transferData, email, username }) => {
   const onFinish = (val) => {
-    callback(val);
+    transferData(val);
   };
 
   // eslint-disable-next-line react/prop-types
-  const CustomizedForm = function ({ fields }) {
+  const CustomizedForm = ({ fields }) => {
     return (
       <Form
         name="dynamic_form_item"
@@ -98,7 +94,7 @@ const FormEditProfile = function ({ callback, email, username }) {
   };
 
   // если значения переданы, то использует их
-  const CompletedForm = function () {
+  const CompletedForm = () => {
     const [fields] = useState([
       {
         name: ['username'],
@@ -116,17 +112,15 @@ const FormEditProfile = function ({ callback, email, username }) {
   return <CompletedForm />;
 };
 
-
 FormEditProfile.defaultProps = {
-  email:'',
-  username:'', 
+  email: '',
+  username: '',
 };
 
 FormEditProfile.propTypes = {
-  callback:PropTypes.func.isRequired,
+  transferData: PropTypes.func.isRequired,
   email: PropTypes.string,
-  username:PropTypes.string, 
+  username: PropTypes.string,
 };
 
-
-export default FormEditProfile;
+export { FormEditProfile };

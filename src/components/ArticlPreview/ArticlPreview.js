@@ -1,29 +1,22 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
-
 import React, { useState, useEffect } from 'react';
-
-import PropTypes from 'prop-types'; 
-
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-
 import { Link } from 'react-router-dom';
-
-import formCreateDate from '../../utils/index';
-
+import { formCreateDate } from '../../utils/index';
 import styles from './ArticlPreview.module.scss';
-
 import likeIconEmpty from '../../images/like-empty-icon.png';
 import likeIconFill from '../../images/like-fill-icon.png.png';
 import avatarIcon from '../../images/avatar-icon.png';
+import { apiService } from '../../services/apiService';
+import { ArticleControler } from '../ArticleControler';
 
-import apiService from '../../services/ApiService';
-
-import ArticleControler from '../ArticleControler';
-
-const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
+const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
   const { title, favorited, favoritesCount, tagList, author, description, createdAt, slug } = item;
   const { username: authorName, image: authorAvatar } = author;
+
+  const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
   // строка с датой создания
   const createDate = formCreateDate(createdAt);
@@ -45,7 +38,8 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   const [isLikeDsabled, setLikeDsabled] = useState(true);
 
   // данные пользователя из стор
-  const { userData } = useSelector((state) => state.user);
+  const stateUser = useSelector((state) => state.user);
+  const { userData } = stateUser;
 
   useEffect(() => {
     // если есть лайк меняет иконку
@@ -62,7 +56,6 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   }, [userData, favorited]);
 
   const onlikeClick = () => {
-    const token = JSON.parse(localStorage.getItem('token'));
     // если лайк не стоит
     if (!like) {
       // добавляет в избранное
@@ -127,40 +120,39 @@ const ArticlPreview = function ({ item, controllerFlag, confirmDeletion }) {
   );
 };
 
-
 ArticlPreview.defaultProps = {
-  controllerFlag:false,
-  item:{
-    title: '', 
-    favorited:false, 
-    favoritesCount:null, 
-    tagList:[], 
-    author:PropTypes.shape({
-      username: '', 
-      image: null
-    }), 
-    description:'', 
-    createdAt:'', 
-    slug:'', 
-  }
+  controllerFlag: false,
+  item: {
+    title: '',
+    favorited: false,
+    favoritesCount: null,
+    tagList: [],
+    author: PropTypes.shape({
+      username: '',
+      image: null,
+    }),
+    description: '',
+    createdAt: '',
+    slug: '',
+  },
 };
 
 ArticlPreview.propTypes = {
-  item:PropTypes.shape({
-    title: PropTypes.string, 
-    favorited:PropTypes.bool, 
-    favoritesCount:PropTypes.number, 
-    tagList:PropTypes.array, 
-    author:PropTypes.shape({
-      username: PropTypes.string, 
-      image: PropTypes.string
-    }), 
-    description:PropTypes.string, 
-    createdAt:PropTypes.string, 
-    slug:PropTypes.string, 
+  item: PropTypes.shape({
+    title: PropTypes.string,
+    favorited: PropTypes.bool,
+    favoritesCount: PropTypes.number,
+    tagList: PropTypes.array,
+    author: PropTypes.shape({
+      username: PropTypes.string,
+      image: PropTypes.string,
+    }),
+    description: PropTypes.string,
+    createdAt: PropTypes.string,
+    slug: PropTypes.string,
   }),
-  controllerFlag:PropTypes.bool,
-  confirmDeletion:PropTypes.func,
+  controllerFlag: PropTypes.bool,
+  confirmDeletion: PropTypes.func,
 };
 
-export default ArticlPreview;
+export { ArticlPreview };

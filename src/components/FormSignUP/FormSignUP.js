@@ -1,14 +1,10 @@
 import React from 'react';
-
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
 import { Form, Input, Button, Checkbox, Divider } from 'antd';
-
 import styles from './FormSignUP.module.scss';
 
-const FormSignUP = function ({ callback }) {
+const FormSignUP = ({ callback }) => {
   return (
     <Form
       layout="vertical"
@@ -124,7 +120,7 @@ const FormSignUP = function ({ callback }) {
 };
 
 FormSignUP.propTypes = {
-  callback:PropTypes.func.isRequired,
+  callback: PropTypes.func.isRequired,
 };
 
-export default FormSignUP;
+export { FormSignUP };
