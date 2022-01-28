@@ -1,6 +1,7 @@
 import React, { useEffect, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchUserRegistration, errorNull } from '../../store/userSlice';
+import { stateUser } from '../../selectors';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { SuccessMessage } from '../../components/SuccessMessage';
 import { FormSignUP } from '../../components/FormSignUP';
@@ -8,9 +9,7 @@ import { Loader } from '../../components/Loader';
 
 const SignUP = memo(() => {
   const dispath = useDispatch();
-  const stateUser = useSelector((state) => state.user);
-
-  const { error, status, userData } = stateUser;
+  const { error, status, userData } = stateUser();
 
   useEffect(() => {
     try {

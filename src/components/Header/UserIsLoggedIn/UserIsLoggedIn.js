@@ -1,15 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { stateUser } from '../../../selectors';
 import { logOutUser } from '../../../store/userSlice';
 import { HeaderButton } from '../HeaderButton';
 import styles from './UserIsLoggedIn.module.scss';
 import avatarPlug from '../../../images/avatar-icon.png';
 
 const UserIsLoggedIn = () => {
-  const stateUser = useSelector((state) => state.user);
-
-  const { userData } = stateUser;
+  const { userData } = stateUser();
   const { username, image } = userData;
 
   const dispath = useDispatch();

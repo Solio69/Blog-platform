@@ -10,7 +10,7 @@ import { SignUP } from '../../pages/SignUP';
 import { Profile } from '../../pages/Profile';
 import { CreateArticle } from '../../pages/CreateArticle';
 import { ArticleEdit } from '../../pages/ArticleEdit';
-import { RequireAuth } from '../../hoc/RequireAuth';
+import { RequireAuth } from '../../HOC/RequireAuth';
 
 const App = () => {
   const dispath = useDispatch();

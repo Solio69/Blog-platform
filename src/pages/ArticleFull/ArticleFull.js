@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { stateUser } from '../../selectors';
 import { Article } from '../../components/Article';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { SuccessMessage } from '../../components/SuccessMessage';
@@ -16,8 +16,7 @@ const ArticleFull = memo(() => {
   const [isSuccess, setIsSuccess] = useState(false); // отобажение успех запроса
   const [controllerShow, setControllerShow] = useState(false);
 
-  const stateUser = useSelector((state) => state.user);
-  const { userData } = stateUser;
+  const { userData } = stateUser();
 
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 

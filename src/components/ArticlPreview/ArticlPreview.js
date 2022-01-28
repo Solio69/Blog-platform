@@ -2,15 +2,15 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { stateUser } from '../../selectors';
 import { formCreateDate } from '../../utils/index';
 import styles from './ArticlPreview.module.scss';
 import likeIconEmpty from '../../images/like-empty-icon.png';
 import likeIconFill from '../../images/like-fill-icon.png.png';
 import avatarIcon from '../../images/avatar-icon.png';
 import { apiService } from '../../services/apiService';
-import { ArticleControler } from '../ArticleControler';
+import { ArticleController } from '../ArticleController';
 
 const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
   const { title, favorited, favoritesCount, tagList, author, description, createdAt, slug } = item;
@@ -38,8 +38,7 @@ const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
   const [isLikeDsabled, setLikeDsabled] = useState(true);
 
   // данные пользователя из стор
-  const stateUser = useSelector((state) => state.user);
-  const { userData } = stateUser;
+  const { userData } = stateUser();
 
   useEffect(() => {
     // если есть лайк меняет иконку
@@ -114,7 +113,7 @@ const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
       </div>
       <div className={styles['article-preview__content']}>
         <p className={styles['article-preview__text']}>{description}</p>
-        <ArticleControler controllerFlag={controllerFlag} confirmDeletion={confirmDeletion} />
+        <ArticleController controllerFlag={controllerFlag} confirmDeletion={confirmDeletion} />
       </div>
     </div>
   );
