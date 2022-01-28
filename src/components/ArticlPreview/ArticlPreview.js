@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { stateUser } from '../../selectors';
+import { useStateUser } from '../../selectors';
 import { formCreateDate } from '../../utils/index';
 import styles from './ArticlPreview.module.scss';
 import likeIconEmpty from '../../images/like-empty-icon.png';
@@ -38,7 +38,7 @@ const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
   const [isLikeDsabled, setLikeDsabled] = useState(true);
 
   // данные пользователя из стор
-  const { userData } = stateUser();
+  const { userData } = useStateUser();
 
   useEffect(() => {
     // если есть лайк меняет иконку

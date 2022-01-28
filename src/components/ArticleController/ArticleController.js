@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Popconfirm, Button } from 'antd';
-import { stateUser } from '../../selectors';
+import { useStateUser } from '../../selectors';
 import styles from './ArticleController.module.scss';
 
 const ArticleController = ({ controllerFlag, confirmDeletion }) => {
-  const  {userData}  = stateUser();
+  const  {userData}  = useStateUser();
 
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);

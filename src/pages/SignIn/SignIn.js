@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchUserLogIn, errorNull } from '../../store/userSlice';
-import { stateUser } from '../../selectors';
+import { useStateUser } from '../../selectors';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { SuccessMessage } from '../../components/SuccessMessage';
 import { FormSignIn } from '../../components/FormSignIn';
@@ -9,7 +9,7 @@ import { Loader } from '../../components/Loader';
 
 const SignIn = memo(() => {
   const dispath = useDispatch();
-  const { error, status, userData } = stateUser();
+  const { error, status, userData } = useStateUser();
 
   useEffect(() => {
     try {

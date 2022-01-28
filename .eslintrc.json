@@ -81,7 +81,7 @@
         "import/prefer-default-export": "off",
         "arrow-body-style": "off",
         "react/display-name": "off",
-        "react/jsx-boolean-value": "off",
+        "react/jsx-boolean-value": "off"
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {
