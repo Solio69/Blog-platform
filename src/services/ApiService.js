@@ -1,38 +1,6 @@
 class ApiService {
   baseStr = 'https://kata.academy:8021/api';
 
-  // получает количество стататей с лимитом 1000
-  async getArticlesMax(token) {
-    const url = new URL(`${this.baseStr}/articles`);
-    url.searchParams.set('limit', 10000);
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    }).catch((err) => err.message);
-
-    return response.json();
-  }
-
-  // получает статьи с определенной страницы
-  async getArticlesByPageNum(pageNum, token) {
-    const url = new URL(`${this.baseStr}/articles`);
-    url.searchParams.set('limit', 5);
-    url.searchParams.set('offset', pageNum);
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    }).catch((err) => err.message);
-
-    return response.json();
-  }
-
   // получает конкретную статью
   async getAarticleFull(slug, token) {
     const url = new URL(`${this.baseStr}/articles/${slug}`);

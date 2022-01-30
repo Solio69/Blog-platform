@@ -5,7 +5,7 @@ import { useStateUser } from '../../selectors';
 import styles from './ArticleController.module.scss';
 
 const ArticleController = ({ controllerFlag, confirmDeletion }) => {
-  const  {userData}  = useStateUser();
+  const { userData } = useStateUser();
 
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);

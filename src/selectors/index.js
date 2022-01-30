@@ -1,10 +1,13 @@
-
-// import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const useStateUser = () => {
-    const test = useSelector((state) => state.user);
-    return test
-}
+  const stateUserst = useSelector((state) => state.user);
+  return stateUserst;
+};
 
-export {useStateUser}
+const useStateArticles = () => {
+  const stateArticles = useSelector((state) => state.articles);
+  return stateArticles;
+};
+
+export { useStateUser, useStateArticles };
