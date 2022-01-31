@@ -57,22 +57,22 @@ export const fetchUserUpdate = createAsyncThunk(
   async function ({ newUser, token }, { rejectWithValue }) {
     const url = new URL(`${baseStr}/user`);
     try {
-    const body = {
-      user: newUser,
-    };
-    const response = await fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    })
+      const body = {
+        user: newUser,
+      };
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+      });
 
-    return response.json();
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
+      return response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -80,19 +80,18 @@ export const fetchUserUpdate = createAsyncThunk(
 export const fetchUserSave = createAsyncThunk('user/fetchUserSave', async function (token, { rejectWithValue }) {
   const url = new URL(`${baseStr}/user`);
   try {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Token ${token}`,
-    },
-  })
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    });
 
-  return response.json();
-  
-} catch (error) {
-  return rejectWithValue(error.message);
-}
+    return response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
 });
 
 const userSlice = createSlice({
