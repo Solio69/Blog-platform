@@ -54,13 +54,13 @@ const articlesSlise = createSlice({
     },
 
     [fetchGetArticlesByPageNum.fulfilled]: (state, action) => {
-        state.status = 'resolved';
-        state.error = null;
+      state.status = 'resolved';
+      state.error = null;
 
-        // записывет в стейт список статей
-        state.list = action.payload.articles;
-        // считает максимальное кол-во страниц
-        state.maxPages = Math.ceil(action.payload.articlesCount / 5);
+      // записывет в стейт список статей
+      state.list = action.payload.articles;
+      // считает максимальное кол-во страниц
+      state.maxPages = Math.ceil(action.payload.articlesCount / 5);
     },
 
     [fetchGetArticlesByPageNum.rejected]: (state, action) => {

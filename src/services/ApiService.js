@@ -33,7 +33,7 @@ class ApiService {
       method: 'POST',
       body: JSON.stringify(body),
       headers,
-    });
+    }).catch((err) => err.message);
 
     return response.json();
   }

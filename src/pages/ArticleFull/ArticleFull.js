@@ -63,23 +63,19 @@ const ArticleFull = memo(() => {
   };
 
   // отображает индикатор загрузки пока не получена статья
-  const loading = isLoading && !isError ? <Loader /> : null;
+  const loading = isLoading && !isError && <Loader />;
 
   // отображает статью если объект не пустой (статья получена)
-  const article =
-    Object.keys(item).length !== 0 && !isSuccess ? (
-      <Article item={item} controllerFlag={controllerShow} confirmDeletion={confirmDeletion} />
-    ) : null;
-
+  const article = Object.keys(item).length !== 0 && !isSuccess && (
+    <Article item={item} controllerFlag={controllerShow} confirmDeletion={confirmDeletion} />
+  );
   // соообщение об ошибке
-  const errorMasege = isError ? <ErrorMessage description={errorText} closingAlert={onCloseMessage} /> : null;
+  const errorMasege = isError && <ErrorMessage description={errorText} closingAlert={onCloseMessage} />;
 
   // собщение об успехе
-  const successMasege =
-    isSuccess && !isError ? (
-      <SuccessMessage description="Article successfully removed!" closingAlert={onCloseMessage} closable={false} />
-    ) : null;
-
+  const successMasege = isSuccess && !isError && (
+    <SuccessMessage description="Article successfully removed!" closingAlert={onCloseMessage} closable={false} />
+  );
   return (
     <>
       {errorMasege}

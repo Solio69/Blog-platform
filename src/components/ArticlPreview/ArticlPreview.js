@@ -26,7 +26,7 @@ const ArticlPreview = ({ item, controllerFlag, confirmDeletion }) => {
 
   // вернет список тегов
   // eslint-disable-next-line react/no-array-index-key
-  const tags = tagList.map((el, i) => (el.length ? <li key={i}>{el}</li> : null));
+  const tags = tagList.map((el, i) => el.length && <li key={i}>{el}</li>);
 
   // динамичекий параметр передаваемый в роутер
   const paramSlug = `/articles/${slug}`;

@@ -45,9 +45,9 @@ const Profile = memo(() => {
         localStorage.removeItem('token');
         localStorage.setItem('token', JSON.stringify(res.payload.user.token));
         setIsSuccess(true);
-      } catch (e) {
+      } catch (err) {
         setIsSuccess(false);
-        console.log(e);
+        console.log(err);
       }
     });
   };
@@ -64,18 +64,16 @@ const Profile = memo(() => {
   };
 
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} closingAlert={onCloseMessage} /> : null;
+  const errorAlert = error && <ErrorMessage description={error} closingAlert={onCloseMessage} />;
 
   // сообщение об успешной авторизации
-  const successMessage = isSuccess ? (
+  const successMessage = isSuccess && (
     <SuccessMessage description="Profile edit successfully!" closable={true} closingAlert={atCloseSuccessMessage} />
-  ) : null;
-
+  );
   // индикатор загрузки
-  const loading = status === 'loading' ? <Loader /> : null;
+  const loading = status === 'loading' && <Loader />;
 
-  const form =
-    status !== 'loading' ? <FormEditProfile transferData={editProfile} email={email} username={username} /> : null;
+  const form = status !== 'loading' && <FormEditProfile transferData={editProfile} email={email} username={username} />;
 
   return (
     <>

@@ -45,9 +45,9 @@ const CreateArticle = memo(() => {
           setIsError(true);
           setErrorText('Data loading error. Please try reloading the page or try again later.');
         });
-    } catch (e) {
+    } catch (err) {
       setLoading(false);
-      console.log(e);
+      console.log(err);
     }
   };
 
@@ -57,19 +57,16 @@ const CreateArticle = memo(() => {
     setIsError(false);
   };
 
-  const form =
-    !isLoading && !isError && !isSuccessAlert ? (
-      <FormArticle transferData={createArticle} title="Create new article" />
-    ) : null;
+  const form = !isLoading && !isError && !isSuccessAlert && (
+    <FormArticle transferData={createArticle} title="Create new article" />
+  );
+  const loader = isLoading && !isError && <Loader />;
 
-  const loader = isLoading && !isError ? <Loader /> : null;
+  const errorAlert = isError && <ErrorMessage description={errorText} closingAlert={atCloseAletr} />;
 
-  const errorAlert = isError ? <ErrorMessage description={errorText} closingAlert={atCloseAletr} /> : null;
-
-  const successAlert = isSuccessAlert ? (
+  const successAlert = isSuccessAlert && (
     <SuccessMessage description="Article created successfully!" closingAlert={atCloseAletr} closable />
-  ) : null;
-
+  );
   return (
     <>
       {successAlert}

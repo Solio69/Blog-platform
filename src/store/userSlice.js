@@ -9,7 +9,30 @@ export const fetchUserRegistration = createAsyncThunk(
   'user/fetchUserRegistration',
   async function (newUser, { rejectWithValue }) {
     const url = new URL(`${baseStr}/users`);
+    try {
+      const body = {
+        user: newUser,
+      };
+      const headers = {
+        'Content-Type': 'application/json;charset=utf-8',
+      };
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers,
+      });
 
+      return response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// авторизация пользователя
+export const fetchUserLogIn = createAsyncThunk('user/fetchUserLogIn', async function (newUser, { rejectWithValue }) {
+  const url = new URL(`${baseStr}/users/login`);
+  try {
     const body = {
       user: newUser,
     };
@@ -20,28 +43,12 @@ export const fetchUserRegistration = createAsyncThunk(
       method: 'POST',
       body: JSON.stringify(body),
       headers,
-    }).catch((err) => rejectWithValue(err.message));
+    });
 
     return response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
   }
-);
-
-// авторизация пользователя
-export const fetchUserLogIn = createAsyncThunk('user/fetchUserLogIn', async function (newUser, { rejectWithValue }) {
-  const url = new URL(`${baseStr}/users/login`);
-  const body = {
-    user: newUser,
-  };
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  };
-  const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers,
-  }).catch((err) => rejectWithValue(err.message));
-
-  return response.json();
 });
 
 // обновление данных пользователя
@@ -49,6 +56,7 @@ export const fetchUserUpdate = createAsyncThunk(
   'user/fetchUserUpdate',
   async function ({ newUser, token }, { rejectWithValue }) {
     const url = new URL(`${baseStr}/user`);
+    try {
     const body = {
       user: newUser,
     };
@@ -59,25 +67,32 @@ export const fetchUserUpdate = createAsyncThunk(
         'Content-Type': 'application/json',
         Authorization: `Token ${token}`,
       },
-    }).catch((err) => rejectWithValue(err.message));
+    })
 
     return response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
   }
 );
 
 // сохранение пользователя зарегистрирванного в системе
 export const fetchUserSave = createAsyncThunk('user/fetchUserSave', async function (token, { rejectWithValue }) {
   const url = new URL(`${baseStr}/user`);
-
+  try {
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     },
-  }).catch((err) => rejectWithValue(err.message));
+  })
 
   return response.json();
+  
+} catch (error) {
+  return rejectWithValue(error.message);
+}
 });
 
 const userSlice = createSlice({
@@ -96,7 +111,7 @@ const userSlice = createSlice({
       state.error = null;
     },
 
-    // разлогинивание пользователя
+    // обнуление ошибки
     errorNull(state) {
       state.error = null;
     },
@@ -137,9 +152,9 @@ const userSlice = createSlice({
         state.error = errStr;
       }
     },
-    [fetchUserRegistration.rejected]: (state) => {
+    [fetchUserRegistration.rejected]: (state, action) => {
       state.status = 'rejected';
-      state.error = 'error';
+      state.error = action.payload;
     },
 
     // fetchUserLogIn

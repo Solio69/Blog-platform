@@ -39,18 +39,15 @@ const SignIn = memo(() => {
   };
 
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} closingAlert={onCloseMessage} /> : null;
+  const errorAlert = error && <ErrorMessage description={error} closingAlert={onCloseMessage} />;
 
   // сообщение об успешной авторизации
-  const successAlert = userData ? (
-    <SuccessMessage description="Authorization was successful!" closable={false} />
-  ) : null;
-
+  const successAlert = userData && <SuccessMessage description="Authorization was successful!" closable={false} />;
   // форма авторизации
-  const form = !successAlert && status !== 'loading' ? <FormSignIn callback={userAuthorize} /> : null;
+  const form = !successAlert && status !== 'loading' && <FormSignIn callback={userAuthorize} />;
 
   // индикатор загрузки
-  const loading = status === 'loading' ? <Loader /> : null;
+  const loading = status === 'loading' && <Loader />;
 
   return (
     <>

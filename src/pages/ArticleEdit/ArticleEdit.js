@@ -21,7 +21,7 @@ const ArticleEdit = memo(() => {
   const [isLoading, setLoading] = useState(false); // отображение лоадера
   const [isError, setIsError] = useState(false); // отобажение ошибки
   const [errorText, setErrorText] = useState(''); // текст ошибки
-  const [isSuccessAlert, setSuccessAlert] = useState(false); // отображение лоадера
+  const [isSuccessAlert, setSuccessAlert] = useState(false); // сообщение об успешном изменении
 
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
@@ -80,26 +80,24 @@ const ArticleEdit = memo(() => {
     setIsError(false);
   };
 
-  const form =
-    !isLoading && !isError && !isSuccessAlert ? (
-      <FormArticle
-        title="Edit article"
-        tagList={tagList}
-        description={description}
-        articleTitle={articleTitle}
-        articleBody={articleBody}
-        transferData={articleUpdate}
-      />
-    ) : null;
+  const form = !isLoading && !isError && !isSuccessAlert && (
+    <FormArticle
+      title="Edit article"
+      tagList={tagList}
+      description={description}
+      articleTitle={articleTitle}
+      articleBody={articleBody}
+      transferData={articleUpdate}
+    />
+  );
 
-  const loader = isLoading ? <Loader /> : null;
+  const loader = isLoading && <Loader />;
 
-  const errorAlert = isError ? <ErrorMessage description={errorText} closingAlert={atCloseAletr} /> : null;
+  const errorAlert = isError && <ErrorMessage description={errorText} closingAlert={atCloseAletr} />;
 
-  const successAlert = isSuccessAlert ? (
+  const successAlert = isSuccessAlert && (
     <SuccessMessage description="Article update successfully!" closingAlert={atCloseAletr} closable={true} />
-  ) : null;
-
+  );
   return (
     <>
       {successAlert}

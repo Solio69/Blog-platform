@@ -28,7 +28,6 @@ const SignUP = memo(() => {
       email: val.email.trim(),
       password: val.password.trim(),
     };
-    // console.log(newUser);
     dispath(fetchUserRegistration(newUser));
   };
 
@@ -38,14 +37,14 @@ const SignUP = memo(() => {
     dispath(errorNull());
   };
   // сообщение об ошибке
-  const errorAlert = error ? <ErrorMessage description={error} closingAlert={onCloseMessage} /> : null;
+  const errorAlert = error && <ErrorMessage description={error} closingAlert={onCloseMessage} />;
 
   // сообщение об успешной регистрации
-  const successAlert = userData ? <SuccessMessage description="Registration was successful!" closable={false} /> : null;
+  const successAlert = userData && <SuccessMessage description="Registration was successful!" closable={false} />;
 
-  const form = !successAlert && status !== 'loading' ? <FormSignUP callback={userRegistration} /> : null;
+  const form = !successAlert && status !== 'loading' && <FormSignUP callback={userRegistration} />;
 
-  const loading = status === 'loading' ? <Loader /> : null;
+  const loading = status === 'loading' && <Loader />;
 
   return (
     <>

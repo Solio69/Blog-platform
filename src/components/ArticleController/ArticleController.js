@@ -9,7 +9,8 @@ const ArticleController = ({ controllerFlag, confirmDeletion }) => {
 
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const { slug } = useParams(); // получает slug из роутера
+  // получает slug из роутера
+  const { slug } = useParams();
 
   // показ модалки
   const showPopconfirm = () => {
